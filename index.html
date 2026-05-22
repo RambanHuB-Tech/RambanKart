@@ -382,7 +382,7 @@
                             </div>
                             <div class="p-3 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
                                 <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Waitlisted Merchants</span>
-                                <span class="text-xl font-bold font-outfit text-white block mt-1">84 <span class="text-xs text-kashmirGreen-200 font-normal">Partners</span></span>
+                                <span class="text-xl font-bold font-outfit text-white block mt-1"><span id="hero-merchant-count">84</span> <span class="text-xs text-kashmirGreen-200 font-normal">Partners</span></span>
                             </div>
                         </div>
 
@@ -503,7 +503,7 @@
                 
                 <!-- Stat 1 -->
                 <div class="flex flex-col space-y-2 reveal reveal-scale pt-6 md:pt-0">
-                    <span class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-outfit text-white">84+</span>
+                    <span id="stats-merchant-count" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-outfit text-white">84+</span>
                     <span class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-400">Local Merchants Pre-Registered</span>
                     <div class="h-1.5 w-16 bg-gradient-to-r from-kashmirGreen-500 to-transparent mx-auto rounded-full mt-2"></div>
                 </div>
@@ -1173,7 +1173,7 @@
                 </div>
 
                 <!-- CTA Right: Modern Glassmorphic Onboarding Card -->
-                <div class="w-full max-w-[400px] glassmorphism rounded-3xl p-6 border border-white/10 shadow-2xl z-10 reveal reveal-right">
+                <div id="merchant-card-container" class="w-full max-w-[400px] glassmorphism rounded-3xl p-6 border border-white/10 shadow-2xl z-10 reveal reveal-right">
                     <h3 class="font-outfit text-lg font-bold text-white text-center">Onboard in 60 Seconds</h3>
                     <p class="text-[11px] text-slate-300 text-center mt-1">Get your digital merchant storefront instantly</p>
                     
@@ -1200,6 +1200,9 @@
                         <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-saffronOrange-500 to-saffronOrange-600 text-white font-bold text-xs uppercase tracking-wider shadow-glow-orange hover:shadow-saffronOrange-500/40 hover:scale-102 transition-transform duration-300">
                             Register Store
                         </button>
+                        <p class="text-[10px] text-center text-slate-400 mt-4">
+                            Already have a storefront? <a href="javascript:void(0)" onclick="toggleMerchantForm('login')" class="text-saffronOrange-500 font-bold hover:underline">Login here</a>
+                        </p>
                     </form>
                 </div>
 
@@ -1949,6 +1952,25 @@
                 const businessCategory = categorySelect ? categorySelect.value : 'Partner';
                 const businessPhone = phoneInput.value;
 
+                // Save to local database
+                let database = JSON.parse(localStorage.getItem('rambankart_merchants') || '[]');
+                if (!database.some(m => m.phone === businessPhone)) {
+                    database.push({
+                        name: businessName,
+                        category: businessCategory,
+                        phone: businessPhone
+                    });
+                    localStorage.setItem('rambankart_merchants', JSON.stringify(database));
+                    localStorage.setItem('rambankart_stats_incremented', 'true');
+                }
+                
+                // Set active merchant session
+                localStorage.setItem('rambankart_current_merchant', JSON.stringify({
+                    name: businessName,
+                    category: businessCategory,
+                    phone: businessPhone
+                }));
+
                 // Modify modal copy to thank the merchant specifically
                 const modalTitle = modal.querySelector('h3');
                 const modalDesc = modal.querySelector('p');
@@ -1961,7 +1983,27 @@
                     modalCard.classList.remove('scale-95');
                 }, 50);
 
-                // Construct WhatsApp message URL and redirect/open in new tab
+                // Increment stats in Hero section and big trust sections
+                const heroCountEl = document.getElementById('hero-merchant-count');
+                const statsCountEl = document.getElementById('stats-merchant-count');
+                
+                if (heroCountEl && heroCountEl.innerText === "84") {
+                    heroCountEl.parentElement.classList.add('text-saffronOrange-500', 'scale-110', 'transition-all', 'duration-500');
+                    setTimeout(() => {
+                        heroCountEl.innerText = "85";
+                        heroCountEl.parentElement.classList.remove('text-saffronOrange-500', 'scale-110');
+                    }, 500);
+                }
+                
+                if (statsCountEl && statsCountEl.innerText === "84+") {
+                    statsCountEl.classList.add('text-saffronOrange-500', 'scale-110', 'transition-all', 'duration-500');
+                    setTimeout(() => {
+                        statsCountEl.innerText = "85+";
+                        statsCountEl.classList.remove('text-saffronOrange-500', 'scale-110');
+                    }, 500);
+                }
+
+                // Construct WhatsApp message URL
                 const whatsappNumber = "919149858527";
                 const message = `Hello RambanKart Team,\n\nI want to register my store on RambanKart:\n🏪 *Store Name:* ${businessName}\n📂 *Category:* ${businessCategory}\n💬 *My WhatsApp:* ${businessPhone}\n\nPlease onboard my digital merchant storefront!`;
                 const encodedMessage = encodeURIComponent(message);
@@ -1970,15 +2012,392 @@
                 // Open in new tab after a brief delay so they see the modal first
                 setTimeout(() => {
                     window.open(whatsappUrl, '_blank');
-                }, 1000);
+                }, 1500);
+
+                // Render Live Storefront Dashboard
+                renderLiveStorefront(businessName, businessCategory, businessPhone);
                 
                 nameInput.value = '';
                 phoneInput.value = '';
             }
         }
 
+        // Render Live Storefront Dashboard Element
+        function renderLiveStorefront(businessName, businessCategory, businessPhone) {
+            let productsHtml = '';
+            if (businessCategory.includes('Food') || businessCategory.includes('Restaurant')) {
+                productsHtml = `
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="pizza" class="w-4 h-4 text-red-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Butter Chicken Combo</span>
+                                <span class="text-[8px] text-slate-400 block">Freshly Cooked Special</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹240</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="utensils" class="w-4 h-4 text-red-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Spicy Veg Momos</span>
+                                <span class="text-[8px] text-slate-400 block">Authentic Himalayan Style</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹120</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="coffee" class="w-4 h-4 text-red-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Kashmiri Kahwa</span>
+                                <span class="text-[8px] text-slate-400 block">Saffron Infused Hot Tea</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹80</span>
+                    </div>
+                `;
+            } else if (businessCategory.includes('Grocery') || businessCategory.includes('Kiryana')) {
+                productsHtml = `
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="nut" class="w-4 h-4 text-green-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Kashmiri Walnuts (1kg)</span>
+                                <span class="text-[8px] text-slate-400 block">100% Organic & Shell-Checked</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹380</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="droplet" class="w-4 h-4 text-green-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Pure Chenab Honey (250g)</span>
+                                <span class="text-[8px] text-slate-400 block">Unprocessed Forest Nectar</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹195</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="shopping-bag" class="w-4 h-4 text-green-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Basmati Rice (Premium)</span>
+                                <span class="text-[8px] text-slate-400 block">Super-Long Aromatic Grain</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹130</span>
+                    </div>
+                `;
+            } else if (businessCategory.includes('Hotel') || businessCategory.includes('Guesthouse') || businessCategory.includes('Stay')) {
+                productsHtml = `
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="hotel" class="w-4 h-4 text-indigo-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Deluxe Pine Cottage</span>
+                                <span class="text-[8px] text-slate-400 block">Private Balcony & Valley View</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹3,400/n</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="tent" class="w-4 h-4 text-indigo-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Luxury Glamping Dome</span>
+                                <span class="text-[8px] text-slate-400 block">Star-Gazing Skylight Bed</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹4,800/n</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="building" class="w-4 h-4 text-indigo-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Executive Suite Room</span>
+                                <span class="text-[8px] text-slate-400 block">High-Speed Wi-Fi & Fireplace</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹1,800/n</span>
+                    </div>
+                `;
+            } else if (businessCategory.includes('Cab') || businessCategory.includes('Operator')) {
+                productsHtml = `
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="car" class="w-4 h-4 text-blue-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Economy Sedan Ride</span>
+                                <span class="text-[8px] text-slate-400 block">Karol to Patnitop Hills</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹850</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="navigation" class="w-4 h-4 text-blue-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Shared Cruiser Transit</span>
+                                <span class="text-[8px] text-slate-400 block">Ramban to Banihal Station</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹150</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="shield" class="w-4 h-4 text-blue-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">SUV Outstation Luxury</span>
+                                <span class="text-[8px] text-slate-400 block">Ramban to Jammu Airport</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹3,200</span>
+                    </div>
+                `;
+            } else {
+                productsHtml = `
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="zap" class="w-4 h-4 text-purple-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Emergency Electrician Visit</span>
+                                <span class="text-[8px] text-slate-400 block">Diagnostics & Quick Repair</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹299</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="wrench" class="w-4 h-4 text-purple-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Leaking Pipe General Plumbing</span>
+                                <span class="text-[8px] text-slate-400 block">Fixing Joints & Water Lines</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹399</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="settings" class="w-4 h-4 text-purple-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[10px] font-bold text-white block">Appliance General Inspection</span>
+                                <span class="text-[8px] text-slate-400 block">AC, TV, or Geyser Diagnostics</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹199</span>
+                    </div>
+                `;
+            }
+
+            const whatsappNumber = "919149858527";
+            const message = `Hello RambanKart Team,\n\nI want to register my store on RambanKart:\n🏪 *Store Name:* ${businessName}\n📂 *Category:* ${businessCategory}\n💬 *My WhatsApp:* ${businessPhone}\n\nPlease onboard my digital merchant storefront!`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+            const cardContainer = document.getElementById('merchant-card-container');
+            if (cardContainer) {
+                cardContainer.innerHTML = `
+                    <!-- Store Header -->
+                    <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="flex h-2.5 w-2.5 relative">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400"></span>
+                            </span>
+                            <h3 class="font-outfit text-sm font-extrabold text-white truncate max-w-[190px] text-left" id="live-store-title">${businessName}</h3>
+                        </div>
+                        <span class="px-2.5 py-0.5 rounded-full text-[8px] font-extrabold bg-green-500/20 text-green-400 border border-green-500/30 uppercase tracking-wider">Live & Active</span>
+                    </div>
+
+                    <!-- Store Category Badge -->
+                    <div class="flex items-center gap-2 mb-4 bg-white/5 px-3 py-1.5 rounded-xl border border-white/5">
+                        <i data-lucide="tag" class="w-3.5 h-3.5 text-saffronOrange-500"></i>
+                        <span class="text-[9px] font-bold text-slate-300 uppercase tracking-wider">${businessCategory}</span>
+                    </div>
+
+                    <!-- Mini Analytics Dashboard -->
+                    <div class="grid grid-cols-3 gap-2 mb-4">
+                        <div class="p-2.5 bg-white/5 rounded-xl border border-white/5 text-center">
+                            <span class="text-[8px] font-semibold text-slate-400 uppercase tracking-wider block">Store Views</span>
+                            <span class="text-xs font-extrabold text-white block mt-0.5 animate-pulse">1</span>
+                        </div>
+                        <div class="p-2.5 bg-white/5 rounded-xl border border-white/5 text-center">
+                            <span class="text-[8px] font-semibold text-slate-400 uppercase tracking-wider block">Orders</span>
+                            <span class="text-xs font-extrabold text-white block mt-0.5">0</span>
+                        </div>
+                        <div class="p-2.5 bg-white/5 rounded-xl border border-white/5 text-center">
+                            <span class="text-[8px] font-semibold text-slate-400 uppercase tracking-wider block">Sales</span>
+                            <span class="text-xs font-extrabold text-saffronOrange-500 block mt-0.5">₹0</span>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Sample Products Catalog -->
+                    <div class="space-y-2 mb-5 overflow-y-auto max-h-[140px] pr-1">
+                        <span class="text-[8px] uppercase tracking-wider font-extrabold text-slate-400 block text-left mb-1.5">Auto-Generated Store Catalog</span>
+                        ${productsHtml}
+                    </div>
+
+                    <!-- Synchronize & Manage Storefront Buttons -->
+                    <div class="space-y-2">
+                        <button onclick="window.open('${whatsappUrl}', '_blank')" class="w-full py-3 rounded-xl bg-gradient-to-r from-saffronOrange-500 to-saffronOrange-600 text-white font-bold text-xs uppercase tracking-wider shadow-glow-orange flex items-center justify-center gap-2 hover:scale-102 transition-transform duration-300">
+                            <i data-lucide="message-square" class="w-4 h-4 shrink-0"></i> Sync Store to WhatsApp
+                        </button>
+                        <button onclick="logoutMerchantStore()" class="w-full py-2 border border-white/10 hover:bg-white/5 rounded-xl text-slate-400 hover:text-white text-[10px] font-bold uppercase tracking-wider transition-colors">
+                            Onboard Another Store
+                        </button>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+        }
+
+        // Toggle Form between Login and Register modes
+        function toggleMerchantForm(mode) {
+            const container = document.getElementById('merchant-card-container');
+            if (!container) return;
+            
+            if (mode === 'register') {
+                container.innerHTML = `
+                    <h3 class="font-outfit text-lg font-bold text-white text-center">Onboard in 60 Seconds</h3>
+                    <p class="text-[11px] text-slate-300 text-center mt-1">Get your digital merchant storefront instantly</p>
+                    
+                    <form class="space-y-4 mt-6" id="merchant-onboard-form" onsubmit="handleMerchantWaitlist(event)">
+                        <div>
+                            <label class="text-[9px] uppercase tracking-wider font-bold text-slate-400 block mb-1">Business Name</label>
+                            <input type="text" id="merchant-name" required placeholder="e.g. Chenab Valley Sweets & Bakery" class="w-full px-4 py-3 rounded-xl bg-slateDark-950/70 border border-white/10 text-white placeholder-slate-500 text-xs focus:border-saffronOrange-500 focus:outline-none transition-colors">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase tracking-wider font-bold text-slate-400 block mb-1">Business Category</label>
+                            <select id="merchant-category" class="w-full px-4 py-3 rounded-xl bg-slateDark-950/70 border border-white/10 text-slate-300 text-xs focus:border-saffronOrange-500 focus:outline-none transition-colors">
+                                <option>Restaurant / Food Stall</option>
+                                <option>Grocery / Kiryana Store</option>
+                                <option>Hotel / Guesthouse Stay</option>
+                                <option>Local Cab Operator</option>
+                                <option>Home Services Contractor</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase tracking-wider font-bold text-slate-400 block mb-1">WhatsApp Mobile Number</label>
+                            <input type="tel" id="merchant-phone" required placeholder="e.g. +91 99060 12345" class="w-full px-4 py-3 rounded-xl bg-slateDark-950/70 border border-white/10 text-white placeholder-slate-500 text-xs focus:border-saffronOrange-500 focus:outline-none transition-colors">
+                        </div>
+                        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-saffronOrange-500 to-saffronOrange-600 text-white font-bold text-xs uppercase tracking-wider shadow-glow-orange hover:shadow-saffronOrange-500/40 hover:scale-102 transition-transform duration-300">
+                            Register Store
+                        </button>
+                        <p class="text-[10px] text-center text-slate-400 mt-4">
+                            Already have a storefront? <a href="javascript:void(0)" onclick="toggleMerchantForm('login')" class="text-saffronOrange-500 font-bold hover:underline">Login here</a>
+                        </p>
+                    </form>
+                `;
+            } else if (mode === 'login') {
+                container.innerHTML = `
+                    <h3 class="font-outfit text-lg font-bold text-white text-center">Access your Storefront</h3>
+                    <p class="text-[11px] text-slate-300 text-center mt-1">Enter your registered details to login</p>
+                    
+                    <form class="space-y-4 mt-6" id="merchant-login-form" onsubmit="handleMerchantLogin(event)">
+                        <div>
+                            <label class="text-[9px] uppercase tracking-wider font-bold text-slate-400 block mb-1">WhatsApp Mobile Number</label>
+                            <input type="tel" id="login-phone" required placeholder="e.g. +91 99060 12345" class="w-full px-4 py-3 rounded-xl bg-slateDark-950/70 border border-white/10 text-white placeholder-slate-500 text-xs focus:border-saffronOrange-500 focus:outline-none transition-colors">
+                        </div>
+                        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-saffronOrange-500 to-saffronOrange-600 text-white font-bold text-xs uppercase tracking-wider shadow-glow-orange hover:shadow-saffronOrange-500/40 hover:scale-102 transition-transform duration-300">
+                            Login to Storefront
+                        </button>
+                        <p class="text-[10px] text-center text-slate-400 mt-4">
+                            New merchant? <a href="javascript:void(0)" onclick="toggleMerchantForm('register')" class="text-saffronOrange-500 font-bold hover:underline">Onboard in 60 seconds</a>
+                        </p>
+                    </form>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        // Handle Storefront Login
+        function handleMerchantLogin(event) {
+            event.preventDefault();
+            const phoneInput = document.getElementById('login-phone');
+            if (!phoneInput || !phoneInput.value) return;
+            
+            const phone = phoneInput.value.trim();
+            
+            // Check localStorage database
+            let database = JSON.parse(localStorage.getItem('rambankart_merchants') || '[]');
+            let merchant = database.find(m => m.phone === phone || m.phone.replace(/[\s\-\+]/g, '').endsWith(phone.replace(/[\s\-\+]/g, '')));
+            
+            if (merchant) {
+                // Set active merchant session
+                localStorage.setItem('rambankart_current_merchant', JSON.stringify(merchant));
+                
+                // Render storefront dashboard
+                renderLiveStorefront(merchant.name, merchant.category, merchant.phone);
+                
+                // Show success toast
+                showUnderPlanningToast(merchant.name, `Welcome back! You are logged in to your live storefront dashboard for ${merchant.name}.`);
+            } else {
+                // Not found: switch to registration with pre-filled number and show prompt
+                showUnderPlanningToast('Store Not Found', 'This WhatsApp number is not yet registered. Let\'s onboard your store in 60 seconds!');
+                
+                toggleMerchantForm('register');
+                const regPhoneInput = document.getElementById('merchant-phone');
+                if (regPhoneInput) {
+                    regPhoneInput.value = phone;
+                }
+            }
+        }
+
+        // Handle Storefront Logout
+        function logoutMerchantStore() {
+            localStorage.removeItem('rambankart_current_merchant');
+            toggleMerchantForm('register');
+        }
+
         // Intercept click on all upcoming services/links and show the pre-launch toast
         document.addEventListener('DOMContentLoaded', () => {
+            // Restore stats increment if registered before
+            if (localStorage.getItem('rambankart_stats_incremented') === 'true') {
+                const heroCountEl = document.getElementById('hero-merchant-count');
+                const statsCountEl = document.getElementById('stats-merchant-count');
+                if (heroCountEl) heroCountEl.innerText = "85";
+                if (statsCountEl) statsCountEl.innerText = "85+";
+            }
+
+            // Restore active merchant login session
+            const currentMerchant = JSON.parse(localStorage.getItem('rambankart_current_merchant'));
+            if (currentMerchant) {
+                renderLiveStorefront(currentMerchant.name, currentMerchant.category, currentMerchant.phone);
+            }
+
             // Bind to all service cards with href="#app" in their arrow link
             document.querySelectorAll('.glassmorphism-card').forEach(card => {
                 const appLink = card.querySelector('a[href="#app"]');
