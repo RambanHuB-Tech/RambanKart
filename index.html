@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RambanKart | Ramban's Premium Digital Super-App & Hyperlocal Marketplace</title>
+    <meta name="description" content="Hyperlocal platform for Ramban District, Jammu & Kashmir. Food delivery, local shopping, taxi booking, hotel reservations, tourism guides, home services, and local contractors—all in one super-app.">
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        kashmirGreen: {
+                            50: '#f1f8f3',
+                            100: '#dceee0',
+                            200: '#bcdbc3',
+                            500: '#1E5631', // Base Kashmir Green
+                            600: '#174326',
+                            700: '#12351e',
+                            900: '#0a1d11',
+                        },
+                        mountainBlue: {
+                            50: '#f0f6f9',
+                            100: '#dae7f0',
+                            200: '#bbd4e4',
+                            500: '#1B4965', // Base Mountain Blue
+                            600: '#14384e',
+                            700: '#0f293b',
+                            950: '#071621',
+                        },
+                        saffronOrange: {
+                            500: '#FF7A00', // Saffron Orange Accent
+                            600: '#e06b00',
+                            700: '#bf5b00',
+                        },
+                        slateDark: {
+                            900: '#0B0F19', // Premium Dark BG
+                            950: '#070A11', // Deepest Dark BG
+                        }
+                    },
+                    boxShadow: {
+                        'premium': '0 10px 40px -10px rgba(0, 0, 0, 0.5)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                        'glow-green': '0 0 30px rgba(30, 86, 49, 0.4)',
+                        'glow-orange': '0 0 30px rgba(255, 122, 0, 0.4)',
+                        'glow-blue': '0 0 30px rgba(27, 73, 101, 0.4)',
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/css">
+        .glassmorphism {
+            background: rgba(11, 15, 25, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glassmorphism-light {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glassmorphism-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glassmorphism-card:hover {
+            border-color: rgba(255, 122, 0, 0.3);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070A11;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1B4965;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF7A00;
+        }
+
+        /* Keyframe Animations */
+        @keyframes drift {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes float-slow {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        .animate-drift-slow-1 {
+            animation: drift 20s infinite alternate ease-in-out;
+        }
+        .animate-drift-slow-2 {
+            animation: drift 25s infinite alternate-reverse ease-in-out;
+        }
+        .animate-float {
+            animation: float 6s infinite ease-in-out;
+        }
+        .animate-float-slow {
+            animation: float-slow 8s infinite ease-in-out;
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 8s infinite ease-in-out;
+        }
+
+        /* Scroll Reveal Base */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
+        
+        /* Interactive Card Custom Styles */
+        .service-card-active {
+            border-color: #FF7A00;
+            box-shadow: 0 0 20px rgba(255, 122, 0, 0.2);
+            background: linear-gradient(135deg, rgba(255, 122, 0, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+        }
+    </style>
+</head>
+<body class="bg-slateDark-950 text-slate-100 font-sans overflow-x-hidden antialiased">
+
+    <!-- GLOBAL PRE-LAUNCH NOTIFICATION BANNER -->
+    <div class="relative w-full bg-gradient-to-r from-kashmirGreen-900 via-saffronOrange-700 to-mountainBlue-950 border-b border-white/10 text-center py-2.5 z-50 overflow-hidden">
+        <p class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-slate-100 flex items-center justify-center gap-2 flex-wrap">
+            <span class="flex h-2 w-2 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-saffronOrange-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-saffronOrange-400"></span>
+            </span>
+            <span>RambanKart is currently under planning & pre-launch. Pre-register for early access!</span>
+            <span class="hidden md:inline text-white/40">|</span>
+            <span class="flex items-center gap-1"><i data-lucide="phone" class="w-3.5 h-3.5 text-saffronOrange-400 shrink-0"></i> Call: <a href="tel:+919149858527" class="underline hover:text-saffronOrange-400 font-bold transition-colors">+91 91498 58527</a></span>
+            <span class="hidden md:inline text-white/40">|</span>
+            <span class="flex items-center gap-1"><i data-lucide="mail" class="w-3.5 h-3.5 text-saffronOrange-400 shrink-0"></i> Email: <a href="mailto:amarkrishna075@gmail.com" class="underline hover:text-saffronOrange-400 font-bold transition-colors">amarkrishna075@gmail.com</a></span>
+        </p>
+    </div>
+
+    <!-- FLOATING DECORATIVE BACKGROUND BLOBS (Mountain Sunset Glow Aura) -->
+    <div class="absolute top-0 left-0 w-full h-[150vh] overflow-hidden pointer-events-none z-0">
+        <!-- Kashmir Green Blob -->
+        <div class="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-kashmirGreen-500/20 blur-[120px] animate-drift-slow-1 animate-pulse-glow"></div>
+        <!-- Mountain Blue Blob -->
+        <div class="absolute top-[25%] -right-[15%] w-[60vw] h-[60vw] rounded-full bg-mountainBlue-500/15 blur-[140px] animate-drift-slow-2"></div>
+        <!-- Saffron Orange Blob -->
+        <div class="absolute top-[50%] left-[20%] w-[45vw] h-[45vw] rounded-full bg-saffronOrange-500/10 blur-[130px] animate-drift-slow-1"></div>
+    </div>
+
+    <!-- 1. STICKY NAVBAR -->
+    <header class="sticky top-0 w-full z-50 transition-all duration-300 glassmorphism shadow-premium border-b border-white/5 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center justify-between">
+                <!-- Premium Brand Logo -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="relative w-12 h-12 flex items-center justify-center bg-gradient-to-tr from-kashmirGreen-600 via-mountainBlue-500 to-saffronOrange-500 rounded-full shadow-glow-blue transition-transform duration-500 group-hover:scale-105 overflow-hidden p-0.5">
+                        <img src="logo.png" class="w-full h-full object-cover rounded-full bg-white" alt="RambanKart Logo">
+                    </div>
+                    <!-- Text Logo -->
+                    <div class="flex flex-col">
+                        <span class="font-outfit text-xl font-extrabold tracking-tight leading-none bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">Ramban<span class="text-saffronOrange-500">Kart</span></span>
+                        <span class="text-[9px] uppercase tracking-[0.25em] font-semibold text-kashmirGreen-200">Hyperlocal Super-App</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#hero" class="text-sm font-medium text-slate-300 hover:text-saffronOrange-500 transition-colors duration-200">Home</a>
+                    <a href="#services" class="text-sm font-medium text-slate-300 hover:text-saffronOrange-500 transition-colors duration-200">Services</a>
+                    <a href="#why" class="text-sm font-medium text-slate-300 hover:text-saffronOrange-500 transition-colors duration-200">Why Us</a>
+                    <a href="#tourism" class="text-sm font-medium text-slate-300 hover:text-saffronOrange-500 transition-colors duration-200">Tourism</a>
+                    <a href="#partner" class="text-sm font-medium text-slate-300 hover:text-saffronOrange-500 transition-colors duration-200">Merchant Hub</a>
+                    <a href="#app" class="text-sm font-medium text-slate-300 hover:text-saffronOrange-500 transition-colors duration-200">App Preview</a>
+                </div>
+
+                <!-- Call to Action & Mobile Menu CTA -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#app" class="relative group overflow-hidden px-5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-white transition-all duration-300 shadow-glow-orange hover:shadow-saffronOrange-500/40">
+                        <!-- Button Background Gradient -->
+                        <span class="absolute inset-0 bg-gradient-to-r from-saffronOrange-600 to-saffronOrange-500 transition-transform duration-300 group-hover:scale-105"></span>
+                        <span class="absolute inset-0 bg-gradient-to-r from-kashmirGreen-600 to-mountainBlue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+                        <span class="relative flex items-center gap-2">
+                            <i data-lucide="smartphone" class="w-4 h-4"></i> Download App
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Responsive Menu Toggle -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors focus:outline-none">
+                    <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Responsive Drawer Menu (Mobile Layout) -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-slateDark-950/95 backdrop-blur-xl border-b border-white/10 shadow-2xl py-6 px-6 transition-all duration-300 transform -translate-y-5 opacity-0">
+            <div class="flex flex-col space-y-4">
+                <a href="#hero" class="mobile-nav-link text-lg font-medium text-slate-300 py-2 border-b border-white/5 hover:text-saffronOrange-500 transition-colors flex items-center gap-3"><i data-lucide="home" class="w-5 h-5 text-kashmirGreen-200"></i> Home</a>
+                <a href="#services" class="mobile-nav-link text-lg font-medium text-slate-300 py-2 border-b border-white/5 hover:text-saffronOrange-500 transition-colors flex items-center gap-3"><i data-lucide="grid" class="w-5 h-5 text-kashmirGreen-200"></i> Services</a>
+                <a href="#why" class="mobile-nav-link text-lg font-medium text-slate-300 py-2 border-b border-white/5 hover:text-saffronOrange-500 transition-colors flex items-center gap-3"><i data-lucide="shield-check" class="w-5 h-5 text-kashmirGreen-200"></i> Why RambanKart</a>
+                <a href="#tourism" class="mobile-nav-link text-lg font-medium text-slate-300 py-2 border-b border-white/5 hover:text-saffronOrange-500 transition-colors flex items-center gap-3"><i data-lucide="compass" class="w-5 h-5 text-kashmirGreen-200"></i> Tourism Spotlight</a>
+                <a href="#partner" class="mobile-nav-link text-lg font-medium text-slate-300 py-2 border-b border-white/5 hover:text-saffronOrange-500 transition-colors flex items-center gap-3"><i data-lucide="briefcase" class="w-5 h-5 text-kashmirGreen-200"></i> Become Partner</a>
+                <a href="#app" class="mobile-nav-link text-lg font-medium text-slate-300 py-2 border-b border-white/5 hover:text-saffronOrange-500 transition-colors flex items-center gap-3"><i data-lucide="smartphone" class="w-5 h-5 text-kashmirGreen-200"></i> App Download</a>
+                <div class="pt-4">
+                    <a href="#app" class="w-full flex items-center justify-center gap-3 py-3 rounded-xl bg-gradient-to-r from-saffronOrange-500 to-saffronOrange-600 text-white font-semibold text-center hover:scale-102 transition-transform duration-300">
+                        <i data-lucide="download" class="w-5 h-5"></i> Get Super-App Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section id="hero" class="relative min-h-[90vh] flex items-center justify-center pt-8 pb-16 lg:pt-16 lg:pb-24 overflow-hidden z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Hero Left: Content -->
+                <div class="lg:col-span-7 flex flex-col space-y-8 text-center lg:text-left z-20">
+                    <!-- Cultural Badge (Hyperlocal pride badge) -->
+                    <div class="inline-flex items-center self-center lg:self-start space-x-2 bg-gradient-to-r from-kashmirGreen-700/60 to-mountainBlue-700/60 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full shadow-lg">
+                        <span class="flex h-2.5 w-2.5 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-saffronOrange-500 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-saffronOrange-500"></span>
+                        </span>
+                        <span class="text-xs font-semibold uppercase tracking-widest text-slate-200">Hyperlocal Startup of Jammu & Kashmir</span>
+                    </div>
+
+                    <!-- Main H1 Headline -->
+                    <div class="space-y-4">
+                        <h1 class="font-outfit text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                            Ramban’s Own <br>
+                            <span class="bg-gradient-to-r from-kashmirGreen-200 via-white to-mountainBlue-200 bg-clip-text text-transparent">Digital Marketplace</span>
+                        </h1>
+                        <!-- Beautiful Animated Subheadline -->
+                        <p class="text-base sm:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                            Ramban's ultimate upcoming digital marketplace super-app. Connecting local shops, food outlets, hotels, taxi networks, and services in Karol, Maitra, and across the Chenab Valley—currently under planning & pre-launch.
+                        </p>
+                    </div>
+
+                    <!-- Call To Action Buttons / Pre-Launch Waitlist Form -->
+                    <div class="flex flex-col space-y-4 w-full max-w-lg mx-auto lg:mx-0">
+                        <form id="hero-waitlist-form" onsubmit="handleHeroWaitlist(event)" class="flex flex-col sm:flex-row gap-3 w-full p-2 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md shadow-premium focus-within:border-saffronOrange-500 transition-all duration-300">
+                            <div class="flex items-center gap-2 px-3 flex-1 min-w-[200px]">
+                                <i data-lucide="mail" class="w-5 h-5 text-slate-400"></i>
+                                <input type="email" id="waitlist-email" placeholder="Enter your email address" required class="bg-transparent border-0 outline-0 text-white placeholder-slate-400 text-sm w-full py-2">
+                            </div>
+                            <button type="submit" class="relative group overflow-hidden px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-white shadow-glow-orange hover:shadow-saffronOrange-500/40 shrink-0">
+                                <span class="absolute inset-0 bg-gradient-to-r from-saffronOrange-600 to-saffronOrange-500 transition-transform duration-300 group-hover:scale-105"></span>
+                                <span class="relative flex items-center justify-center gap-2">Join Waitlist <i data-lucide="send" class="w-4 h-4"></i></span>
+                            </button>
+                        </form>
+                        
+                        <!-- Real-time dynamic count indicators -->
+                        <div class="flex items-center justify-center lg:justify-start gap-4 text-xs text-slate-400 px-1">
+                            <span class="flex items-center gap-1.5"><i data-lucide="users" class="w-4 h-4 text-kashmirGreen-200"></i> <strong class="text-white font-bold" id="waitlist-counter">1,428</strong> residents joined</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-white/20"></span>
+                            <span class="flex items-center gap-1.5"><i data-lucide="store" class="w-4 h-4 text-saffronOrange-500"></i> <strong class="text-white font-bold">84</strong> local merchants</span>
+                        </div>
+                    </div>
+
+                    <!-- Multi-Service Interactive Quick Badges -->
+                    <div class="pt-4 border-t border-white/5">
+                        <p class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3 text-center lg:text-left">Instantly available in Ramban</p>
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-2.5">
+                            <span class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 hover:border-saffronOrange-500 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-saffronOrange-500"></i> Grocery</span>
+                            <span class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 hover:border-saffronOrange-500 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="utensils" class="w-3.5 h-3.5 text-saffronOrange-500"></i> Restaurant</span>
+                            <span class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 hover:border-saffronOrange-500 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="car" class="w-3.5 h-3.5 text-saffronOrange-500"></i> Taxi Booking</span>
+                            <span class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 hover:border-saffronOrange-500 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="compass" class="w-3.5 h-3.5 text-saffronOrange-500"></i> Local Tour Guide</span>
+                            <span class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 hover:border-saffronOrange-500 transition-colors flex items-center gap-2 cursor-default"><i data-lucide="hammer" class="w-3.5 h-3.5 text-saffronOrange-500"></i> Contractor</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right: Interactive Dashboard Visuals & Mobile Mockups -->
+                <div class="lg:col-span-5 relative w-full flex items-center justify-center">
+                    
+                    <!-- Back Glow behind dashboard/mockup -->
+                    <div class="absolute w-72 h-72 rounded-full bg-mountainBlue-500/25 blur-[90px] animate-pulse-glow z-0"></div>
+                    
+                    <!-- Majestic 3D Floating Dashboard Container -->
+                    <div class="relative w-full max-w-[440px] aspect-[4/5] glassmorphism rounded-3xl p-6 shadow-2xl border border-white/10 z-10 flex flex-col justify-between overflow-hidden animate-float">
+                        
+                        <!-- Premium Inner Header (RambanKart Dashboard Header) -->
+                        <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">RambanKart Pre-Launch Portal</span>
+                            <div class="w-2.5 h-2.5 rounded-full bg-saffronOrange-500 animate-pulse"></div>
+                        </div>
+
+                        <!-- Pre-Launch Statistics Grid -->
+                        <div class="grid grid-cols-2 gap-3 my-4">
+                            <div class="p-3 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
+                                <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Pledged Delivery Cabs</span>
+                                <span class="text-xl font-bold font-outfit text-white block mt-1">42 <span class="text-xs text-saffronOrange-500 font-normal">Registered</span></span>
+                            </div>
+                            <div class="p-3 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
+                                <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Waitlisted Merchants</span>
+                                <span class="text-xl font-bold font-outfit text-white block mt-1">84 <span class="text-xs text-kashmirGreen-200 font-normal">Partners</span></span>
+                            </div>
+                        </div>
+
+                        <!-- Main visual: Mountain Range Landscape Vector inside Dashboard with dynamic line plots -->
+                        <div class="relative flex-1 bg-slateDark-950/50 border border-white/5 rounded-2xl overflow-hidden p-4 flex flex-col justify-between">
+                            <!-- Premium real landscape backdrop -->
+                            <img src="1ramban.png" class="absolute inset-0 w-full h-full object-cover opacity-35 z-0" alt="Ramban Landscape">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slateDark-950/80 via-slateDark-950/20 to-transparent z-0"></div>
+                            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] z-0"></div>
+                            
+                            <!-- Custom Stylized Mountains & Chenab River illustration using SVG -->
+                            <div class="absolute bottom-0 left-0 w-full h-[65%] pointer-events-none z-0">
+                                <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                    <!-- Back peaks -->
+                                    <polygon points="0,100 20,40 50,75 80,30 100,100" fill="#14384e" opacity="0.4" />
+                                    <!-- Front green peaks -->
+                                    <polygon points="0,100 35,50 65,80 90,45 100,100" fill="#143C22" opacity="0.7" />
+                                    <!-- River flowing through valley -->
+                                    <path d="M0,100 Q40,90 60,95 T100,85 L100,100 L0,100 Z" fill="#1B4965" opacity="0.9" />
+                                    <!-- Glowing Bridge Symbolism representing Maitra Bridge -->
+                                    <line x1="45" y1="91" x2="65" y2="92" stroke="#FF7A00" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            
+                            <!-- Glowing location pins floating on peaks -->
+                            <div class="absolute top-[45%] left-[28%] z-10 animate-bounce">
+                                <div class="relative">
+                                    <div class="absolute inset-0 w-4 h-4 rounded-full bg-saffronOrange-500 opacity-75 animate-ping"></div>
+                                    <i data-lucide="map-pin" class="w-4 h-4 text-saffronOrange-500 relative"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Text description inside SVG panel -->
+                            <div class="relative z-10 flex flex-col justify-between h-full">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Chenab Valley Ecosystem</h3>
+                                        <p class="text-[9px] text-slate-300">Live monitoring of logistics network</p>
+                                    </div>
+                                    <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-saffronOrange-500/30 text-saffronOrange-500 border border-saffronOrange-500/20">Planning Phase</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[9px] text-slate-400 block uppercase font-semibold">Beta Waitlist Signups</span>
+                                    <span class="text-base font-extrabold font-outfit text-white">1.4k Residents</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pre-Launch Beta Banner -->
+                        <div class="mt-4 p-3 bg-gradient-to-r from-kashmirGreen-700/40 to-mountainBlue-700/40 rounded-xl border border-white/10 flex items-center justify-between">
+                            <div class="flex items-center space-x-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-saffronOrange-500/20 flex items-center justify-center">
+                                    <i data-lucide="calendar" class="w-4.5 h-4.5 text-saffronOrange-500 animate-pulse"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-[10px] font-bold text-white uppercase tracking-wider">Launch Timeline</h4>
+                                    <p class="text-[9px] text-slate-300">Closed beta testing starts next month</p>
+                                </div>
+                            </div>
+                            <span class="text-[9px] font-bold text-saffronOrange-500 uppercase tracking-widest bg-saffronOrange-500/10 px-2.5 py-1 rounded-md border border-saffronOrange-500/25">Phase 1</span>
+                        </div>
+                    </div>
+
+                    <!-- FLOATING INTERACTIVE SERVICE CARDS orbiting the dashboard mockup -->
+                    <!-- Card 1: Grocery Delivery (floating top-left) -->
+                    <div class="absolute -top-4 -left-12 hidden sm:flex items-center gap-2.5 px-4 py-2.5 bg-slateDark-900/90 backdrop-blur-md rounded-2xl shadow-premium border border-white/10 cursor-pointer hover:border-saffronOrange-500 hover:scale-105 transition-all duration-300 z-20 animate-float-slow" style="animation-delay: 0.5s;">
+                        <div class="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
+                            <i data-lucide="shopping-cart" class="w-4.5 h-4.5 text-green-400"></i>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Grocery</span>
+                            <span class="text-xs font-semibold text-white">Under 25 Mins</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Taxi Booking (floating top-right) -->
+                    <div class="absolute top-1/4 -right-16 hidden sm:flex items-center gap-2.5 px-4 py-2.5 bg-slateDark-900/90 backdrop-blur-md rounded-2xl shadow-premium border border-white/10 cursor-pointer hover:border-saffronOrange-500 hover:scale-105 transition-all duration-300 z-20 animate-float-slow" style="animation-delay: 1.5s;">
+                        <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                            <i data-lucide="car" class="w-4.5 h-4.5 text-blue-400"></i>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Taxi Booking</span>
+                            <span class="text-xs font-semibold text-white">Ramban to Patnitop</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Tourism Guide (floating bottom-left) -->
+                    <div class="absolute bottom-12 -left-16 hidden sm:flex items-center gap-2.5 px-4 py-2.5 bg-slateDark-900/90 backdrop-blur-md rounded-2xl shadow-premium border border-white/10 cursor-pointer hover:border-saffronOrange-500 hover:scale-105 transition-all duration-300 z-20 animate-float-slow" style="animation-delay: 2.5s;">
+                        <div class="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                            <i data-lucide="map" class="w-4.5 h-4.5 text-saffronOrange-500"></i>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tourism</span>
+                            <span class="text-xs font-semibold text-white">Sanasar Meadows</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Local Contractor (floating bottom-right) -->
+                    <div class="absolute -bottom-4 -right-10 hidden sm:flex items-center gap-2.5 px-4 py-2.5 bg-slateDark-900/90 backdrop-blur-md rounded-2xl shadow-premium border border-white/10 cursor-pointer hover:border-saffronOrange-500 hover:scale-105 transition-all duration-300 z-20 animate-float-slow" style="animation-delay: 3.5s;">
+                        <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                            <i data-lucide="hammer" class="w-4.5 h-4.5 text-purple-400"></i>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Home Services</span>
+                            <span class="text-xs font-semibold text-white">Reliable Electrician</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TRUST SECTION -->
+    <section class="py-12 relative z-20 bg-slateDark-950/80 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center">
+                
+                <!-- Stat 1 -->
+                <div class="flex flex-col space-y-2 reveal reveal-scale pt-6 md:pt-0">
+                    <span class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-outfit text-white">84+</span>
+                    <span class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-400">Local Merchants Pre-Registered</span>
+                    <div class="h-1.5 w-16 bg-gradient-to-r from-kashmirGreen-500 to-transparent mx-auto rounded-full mt-2"></div>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="flex flex-col space-y-2 reveal reveal-scale delay-100 pt-6 md:pt-0">
+                    <span class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-outfit text-white">1,400+</span>
+                    <span class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-400">Residents Joined Waitlist</span>
+                    <div class="h-1.5 w-16 bg-gradient-to-r from-saffronOrange-500 to-transparent mx-auto rounded-full mt-2"></div>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="flex flex-col space-y-2 reveal reveal-scale delay-200 pt-6 md:pt-0">
+                    <span class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-outfit text-white">12+</span>
+                    <span class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-400">Regions Covered at Launch</span>
+                    <div class="h-1.5 w-16 bg-gradient-to-r from-mountainBlue-500 to-transparent mx-auto rounded-full mt-2"></div>
+                </div>
+
+                <!-- Stat 4 -->
+                <div class="flex flex-col space-y-2 reveal reveal-scale delay-300 pt-6 md:pt-0">
+                    <span class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-outfit text-white">100%</span>
+                    <span class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-400">Local Chenab Valley Focus</span>
+                    <div class="h-1.5 w-16 bg-gradient-to-r from-kashmirGreen-500 to-transparent mx-auto rounded-full mt-2"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SERVICES GRID -->
+    <section id="services" class="py-20 relative z-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <div class="inline-flex items-center space-x-2 bg-saffronOrange-500/10 border border-saffronOrange-500/20 px-3.5 py-1.5 rounded-full">
+                    <i data-lucide="grid" class="w-4 h-4 text-saffronOrange-500"></i>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-saffronOrange-500">Infinite Possibilities</span>
+                </div>
+                <h2 class="font-outfit text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+                    One App. Every Service.
+                </h2>
+                <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto">
+                    Built hyperlocally specifically to support Ramban district's geographic landscape. Discover convenience at your fingertips.
+                </p>
+            </div>
+
+            <!-- Premium Services Interactive Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Service Card 1: Food Delivery -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between group reveal">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="utensils" class="w-6 h-6 text-red-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-outfit text-lg font-bold text-white group-hover:text-saffronOrange-500 transition-colors">Food Delivery</h3>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Savor hot, delicious meals delivered from top local restaurants and cafes right to your doorstep.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-kashmirGreen-200">15-30 Mins Delivery</span>
+                        <a href="#app" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-saffronOrange-500 group-hover:border-saffronOrange-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service Card 2: Grocery & Hyperlocal Shop -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between group reveal delay-100">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="shopping-basket" class="w-6 h-6 text-green-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-outfit text-lg font-bold text-white group-hover:text-saffronOrange-500 transition-colors">Grocery & Market</h3>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Fresh farm produce, daily essentials, and locally produced Kashmir walnuts, almonds, and honey.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-kashmirGreen-200">Express delivery</span>
+                        <a href="#app" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-saffronOrange-500 group-hover:border-saffronOrange-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service Card 3: Tourism Guide & Stays -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between group reveal delay-200">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="compass" class="w-6 h-6 text-amber-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-outfit text-lg font-bold text-white group-hover:text-saffronOrange-500 transition-colors">Tourism Guides</h3>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Fully certified local guides for trekking the scenic mountains of Patnitop, Sanasar, and Gool.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-kashmirGreen-200">Immersive Packages</span>
+                        <a href="#tourism" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-saffronOrange-500 group-hover:border-saffronOrange-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service Card 4: Local Taxi Booking -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between group reveal delay-300">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="car" class="w-6 h-6 text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-outfit text-lg font-bold text-white group-hover:text-saffronOrange-500 transition-colors">Taxi & Cab Booking</h3>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Instantly book cabs for local transit, long-distance commutes to Jammu or Srinagar, and sight-seeing.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-kashmirGreen-200">Affordable Rates</span>
+                        <a href="#app" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-saffronOrange-500 group-hover:border-saffronOrange-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service Card 5: Premium Hotels -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between group reveal">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="hotel" class="w-6 h-6 text-indigo-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-outfit text-lg font-bold text-white group-hover:text-saffronOrange-500 transition-colors">Hotels & Stays</h3>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Luxury resorts, boutique cottages, homestays, and modern budget hotels in Patnitop and Ramban.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-kashmirGreen-200">Verified properties</span>
+                        <a href="#app" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-saffronOrange-500 group-hover:border-saffronOrange-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service Card 6: Medical Stores -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between group reveal delay-100">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="pill" class="w-6 h-6 text-rose-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-outfit text-lg font-bold text-white group-hover:text-saffronOrange-500 transition-colors">Medicines</h3>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Fast, reliable medicine deliveries from verified local pharmacies in Ramban. Direct prescriptions upload.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-kashmirGreen-200">Emergency support</span>
+                        <a href="#app" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-saffronOrange-500 group-hover:border-saffronOrange-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service Card 7: Local Contractors -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between group reveal delay-200">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="shield" class="w-6 h-6 text-teal-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-outfit text-lg font-bold text-white group-hover:text-saffronOrange-500 transition-colors">Contractors</h3>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Professional builders, construction supervisors, and skilled labor resources for local infrastructure.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-kashmirGreen-200">Vetted professionals</span>
+                        <a href="#app" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-saffronOrange-500 group-hover:border-saffronOrange-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service Card 8: Home Services (Urban Company style) -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between group reveal delay-300">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="plug" class="w-6 h-6 text-purple-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-outfit text-lg font-bold text-white group-hover:text-saffronOrange-500 transition-colors">Home Services</h3>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                On-demand verified electricians, plumbers, home cleaning experts, and electronics repair technicians.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-kashmirGreen-200">100% Insured work</span>
+                        <a href="#app" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-saffronOrange-500 group-hover:border-saffronOrange-500 transition-all duration-300">
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. WHY RAMBANKART -->
+    <section id="why" class="py-20 relative z-20 bg-slateDark-900/40 border-y border-white/5 overflow-hidden">
+        
+        <!-- Background circular elements -->
+        <div class="absolute w-[400px] h-[400px] rounded-full border border-white/5 -top-20 -left-20 pointer-events-none"></div>
+        <div class="absolute w-[600px] h-[600px] rounded-full border border-white/5 -top-[120px] -left-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <!-- Why Left: Beautiful Visual Mockups (Simulated Phone App Grid) -->
+                <div class="lg:col-span-5 relative w-full flex items-center justify-center reveal reveal-left">
+                    <div class="absolute w-72 h-72 rounded-full bg-kashmirGreen-500/10 blur-[80px]"></div>
+                    
+                    <div class="relative w-full max-w-[340px] aspect-[9/19] bg-slateDark-950 rounded-[48px] p-3 shadow-2xl border-4 border-slate-800/80 overflow-hidden flex flex-col justify-between">
+                        <!-- Top notch -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-2xl z-30 flex items-center justify-center">
+                            <div class="w-2.5 h-2.5 rounded-full bg-slate-900 mr-2"></div>
+                            <div class="w-12 h-1 bg-slate-950 rounded-full"></div>
+                        </div>
+
+                        <!-- Inner Screen Background -->
+                        <div class="relative flex-1 bg-slateDark-950 rounded-[38px] p-4 flex flex-col justify-between z-10 overflow-hidden pt-8">
+                            
+                            <!-- Small Header -->
+                            <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                                <div class="flex items-center space-x-1.5">
+                                    <div class="w-5 h-5 rounded bg-kashmirGreen-500 flex items-center justify-center"><i data-lucide="map-pin" class="w-3 h-3 text-white"></i></div>
+                                    <span class="text-[9px] font-bold text-white uppercase tracking-wider">Ramban Market</span>
+                                </div>
+                                <span class="text-[9px] font-medium text-slate-400">9:41 AM</span>
+                            </div>
+
+                            <!-- Interactive mock dashboard elements inside phone -->
+                            <div class="flex-1 my-4 flex flex-col space-y-3 overflow-y-auto pr-1">
+                                <!-- Banner -->
+                                <div class="relative rounded-xl p-3 border border-white/10 overflow-hidden min-h-[75px] flex flex-col justify-end">
+                                    <img src="patnitop1.png" class="absolute inset-0 w-full h-full object-cover opacity-60 z-0" alt="Festival Special">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slateDark-950 via-slateDark-950/40 to-transparent z-10"></div>
+                                    <div class="relative z-20">
+                                        <h4 class="text-[10px] font-bold text-white leading-none">Local Festival Special!</h4>
+                                        <p class="text-[8px] text-slate-200 mt-1 leading-tight">Get authentic Patnitop cheese & local walnuts with fast home delivery.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Quick search inside mock app -->
+                                <div class="bg-white/5 rounded-lg p-2 flex items-center gap-2 border border-white/5">
+                                    <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
+                                    <span class="text-[9px] text-slate-400">Search restaurants, hotels, plumbers...</span>
+                                </div>
+
+                                <!-- Service grid mockup inside phone -->
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="bg-white/5 p-2 rounded-lg border border-white/5 flex flex-col items-center justify-center text-center">
+                                        <i data-lucide="utensils" class="w-4 h-4 text-red-400 mb-1"></i>
+                                        <span class="text-[8px] font-medium text-slate-200">Food</span>
+                                    </div>
+                                    <div class="bg-white/5 p-2 rounded-lg border border-white/5 flex flex-col items-center justify-center text-center">
+                                        <i data-lucide="shopping-bag" class="w-4 h-4 text-green-400 mb-1"></i>
+                                        <span class="text-[8px] font-medium text-slate-200">Groceries</span>
+                                    </div>
+                                    <div class="bg-white/5 p-2 rounded-lg border border-white/5 flex flex-col items-center justify-center text-center">
+                                        <i data-lucide="car" class="w-4 h-4 text-blue-400 mb-1"></i>
+                                        <span class="text-[8px] font-medium text-slate-200">Cab</span>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic notification mockup -->
+                                <div class="p-2.5 bg-saffronOrange-500/10 rounded-xl border border-saffronOrange-500/20 flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="bell" class="w-3.5 h-3.5 text-saffronOrange-500"></i>
+                                        <span class="text-[8px] font-semibold text-slate-300">Driver Arriving (Karol to Maitra)</span>
+                                    </div>
+                                    <span class="text-[7px] text-saffronOrange-500 font-bold">2 MINS</span>
+                                </div>
+
+                                <!-- Dynamic cart total mockup inside phone -->
+                                <div class="p-2.5 bg-white/5 rounded-xl border border-white/5 flex items-center justify-between mt-auto">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="shopping-cart" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <span class="text-[8px] text-slate-300">2 Items in Cart</span>
+                                    </div>
+                                    <span class="text-[9px] font-extrabold text-white">₹380</span>
+                                </div>
+
+                            </div>
+
+                            <!-- Bottom bar indicator inside phone -->
+                            <div class="w-24 h-1 bg-slate-700 rounded-full mx-auto mt-2"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Why Right: Feature Grid & Local connection copy -->
+                <div class="lg:col-span-7 flex flex-col space-y-8 reveal">
+                    
+                    <div class="space-y-4">
+                        <div class="inline-flex items-center space-x-2 bg-kashmirGreen-500/10 border border-kashmirGreen-500/20 px-3.5 py-1.5 rounded-full">
+                            <i data-lucide="heart" class="w-4 h-4 text-kashmirGreen-200"></i>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-kashmirGreen-200">Built Local, Thrives Global</span>
+                        </div>
+                        <h2 class="font-outfit text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+                            Empowering the Economy of Ramban
+                        </h2>
+                        <p class="text-sm sm:text-base text-slate-300 max-w-xl">
+                            RambanKart is engineered from the ground up specifically to solve remote mountain district logistics, supporting our community, businesses, and tourists alike.
+                        </p>
+                    </div>
+
+                    <!-- Features checklist with custom luxury bullet indicators -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                        
+                        <!-- Feature item 1 -->
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-kashmirGreen-500/10 border border-kashmirGreen-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-kashmirGreen-200"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="font-outfit text-sm font-bold text-white">Custom Mountain Routing</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Our proprietary mapping software understands Ramban's hilly geography and local shortcuts.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature item 2 -->
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-saffronOrange-500/10 border border-saffronOrange-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="users" class="w-5 h-5 text-saffronOrange-500"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="font-outfit text-sm font-bold text-white">Support Local Shopkeepers</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    100% of our registration commissions are funneled directly back to our partner merchants.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature item 3 -->
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-mountainBlue-500/10 border border-mountainBlue-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="zap" class="w-5 h-5 text-mountainBlue-200"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="font-outfit text-sm font-bold text-white">Direct WhatsApp Ordering</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Enables quick text-based ordering so you don't even need high-speed internet to place orders.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature item 4 -->
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-kashmirGreen-500/10 border border-kashmirGreen-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-kashmirGreen-200"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="font-outfit text-sm font-bold text-white">100% Verified Services</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Every cab, contractor, plumber, and tourist guide undergoes biometric and background checks.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5.5 DEVELOPMENT ROADMAP TIMELINE -->
+    <section id="roadmap" class="py-20 relative z-20 bg-slateDark-900/20 border-b border-white/5 overflow-hidden">
+        <!-- Floating gradient accent -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] rounded-full bg-saffronOrange-500/5 blur-[120px] pointer-events-none z-0"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4 reveal">
+                <div class="inline-flex items-center space-x-2 bg-saffronOrange-500/10 border border-saffronOrange-500/20 px-3.5 py-1.5 rounded-full">
+                    <i data-lucide="calendar" class="w-4 h-4 text-saffronOrange-500"></i>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-saffronOrange-500">Roadmap to Launch</span>
+                </div>
+                <h2 class="font-outfit text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    How We Are Building the <span class="bg-gradient-to-r from-kashmirGreen-200 to-saffronOrange-500 bg-clip-text text-transparent">Future of Ramban</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
+                    A step-by-step phased rollout strategy connecting local merchants, transport systems, and services directly to Chenab Valley residents.
+                </p>
+            </div>
+
+            <!-- Roadmap Grid (Phased Timeline) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative mt-12">
+                <!-- Connective Horizontal Line on Desktop -->
+                <div class="hidden md:block absolute top-[44px] left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-kashmirGreen-600 via-saffronOrange-500 to-mountainBlue-600 z-0"></div>
+
+                <!-- Phase 1 Card -->
+                <div class="glassmorphism-card rounded-3xl p-8 flex flex-col justify-between relative z-10 reveal border-t-2 border-t-kashmirGreen-500">
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3.5 py-1.5 rounded-xl text-[10px] font-bold bg-kashmirGreen-500/20 text-kashmirGreen-200 uppercase border border-kashmirGreen-500/30">Phase 1 (Active)</span>
+                            <div class="w-10 h-10 rounded-full bg-kashmirGreen-600 flex items-center justify-center text-white shadow-glow-green">
+                                <i data-lucide="clipboard-list" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="font-outfit text-lg font-bold text-white">Under Planning & Merchant Onboarding</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Designing the super-app framework, registering local retail, taxi partners, and services in Karol, Maitra, and Ramban. Establishing the base waitlist.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/5 space-y-2.5">
+                        <div class="flex items-center gap-2 text-xs text-slate-300">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-kashmirGreen-200"></i> Core architecture complete
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-slate-300">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-kashmirGreen-200"></i> High-fidelity branding & logo
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-slate-300">
+                            <i data-lucide="clock" class="w-4 h-4 text-saffronOrange-500"></i> Merchant pre-registrations open
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2 Card -->
+                <div class="glassmorphism-card rounded-3xl p-8 flex flex-col justify-between relative z-10 reveal border-t-2 border-t-saffronOrange-500 delay-100">
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3.5 py-1.5 rounded-xl text-[10px] font-bold bg-saffronOrange-500/20 text-saffronOrange-500 uppercase border border-saffronOrange-500/30">Phase 2 (Upcoming)</span>
+                            <div class="w-10 h-10 rounded-full bg-saffronOrange-500 flex items-center justify-center text-white shadow-glow-orange animate-pulse">
+                                <i data-lucide="activity" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="font-outfit text-lg font-bold text-white">Closed Loop Beta Testing</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Launching private beta version of RambanKart with selected local restaurants, grocery shops, and taxi operators. Closed trials in key hubs.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/5 space-y-2.5">
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <i data-lucide="circle" class="w-4 h-4 text-slate-500"></i> Closed beta app builds
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <i data-lucide="circle" class="w-4 h-4 text-slate-500"></i> Selected pilot delivery trials
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <i data-lucide="circle" class="w-4 h-4 text-slate-500"></i> Driver onboarding verification
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3 Card -->
+                <div class="glassmorphism-card rounded-3xl p-8 flex flex-col justify-between relative z-10 reveal border-t-2 border-t-mountainBlue-500 delay-200">
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3.5 py-1.5 rounded-xl text-[10px] font-bold bg-mountainBlue-500/20 text-mountainBlue-200 uppercase border border-mountainBlue-500/30">Phase 3 (Target Q4)</span>
+                            <div class="w-10 h-10 rounded-full bg-mountainBlue-600 flex items-center justify-center text-white shadow-glow-blue">
+                                <i data-lucide="rocket" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="font-outfit text-lg font-bold text-white">Public Super-App Launch</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Nationwide launch of Android & iOS super-apps on Google Play & App Store. Unifying shopping, food delivery, tours, and services.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/5 space-y-2.5">
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <i data-lucide="circle" class="w-4 h-4 text-slate-500"></i> Public Android & iOS release
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <i data-lucide="circle" class="w-4 h-4 text-slate-500"></i> Full districtwide expansion
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <i data-lucide="circle" class="w-4 h-4 text-slate-500"></i> 24/7 localized support helpline
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 6. TOURISM SHOWCASE -->
+    <section id="tourism" class="py-20 relative z-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <div class="inline-flex items-center space-x-2 bg-mountainBlue-500/10 border border-mountainBlue-500/20 px-3.5 py-1.5 rounded-full">
+                    <i data-lucide="compass" class="w-4 h-4 text-mountainBlue-200"></i>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-mountainBlue-200">Paradise Explored</span>
+                </div>
+                <h2 class="font-outfit text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+                    Explore Tourism in Ramban
+                </h2>
+                <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto">
+                    From the lush velvet green meadows of Sanasar to the snow-covered pine slopes of Patnitop—discover local guides, verified stays, and transportation.
+                </p>
+            </div>
+
+            <!-- Immersive Tourism Interactive Slider/Carousel -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                
+                <!-- Interactive Left Pane: The Main Immersive Scenic Visual Card -->
+                <div class="lg:col-span-8 relative rounded-3xl overflow-hidden min-h-[420px] shadow-2xl border border-white/10 reveal reveal-left flex flex-col justify-between p-8 group">
+                    
+                    <!-- Proper Image asset with fallback -->
+                    <img id="tourism-bg" src="patnitop.png" class="absolute inset-0 w-full h-full object-cover z-0 opacity-40 group-hover:scale-105 transition-transform duration-700" alt="Tourism Destination">
+                    <div id="tourism-vector-bg" class="absolute inset-0 z-0 opacity-0 bg-gradient-to-tr from-mountainBlue-950/70 via-transparent to-saffronOrange-500/10"></div>
+                    
+                    <!-- Fallback / Simulated premium mountain scenic gradient overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slateDark-950 via-slateDark-950/40 to-transparent z-10"></div>
+                    
+                    <!-- Glowing badges top of the scene -->
+                    <div class="relative z-20 flex items-center justify-between">
+                        <span id="tourism-badge" class="px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest bg-saffronOrange-500 text-white shadow-glow-orange animate-pulse">Patnitop Hills</span>
+                        <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-slateDark-950/70 backdrop-blur-md border border-white/10">
+                            <i data-lucide="star" class="w-3.5 h-3.5 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <span id="tourism-rating" class="text-xs font-bold text-white">4.9 (120+ Saves)</span>
+                        </div>
+                    </div>
+
+                    <!-- Details and features bottom of the scene -->
+                    <div class="relative z-20 space-y-4">
+                        <h3 id="tourism-title" class="font-outfit text-2xl sm:text-3xl font-extrabold text-white">Explore Snow Slopes & Velvet Pine Valleys</h3>
+                        <p id="tourism-desc" class="text-xs sm:text-sm text-slate-200 max-w-xl">
+                            Plan your weekend escape to Patnitop. Connect with verified RambanKart tourism guides, book local cottages directly, and reserve premium taxi commutes instantly.
+                        </p>
+                        <div id="tourism-tags" class="flex flex-wrap gap-3 pt-2">
+                            <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="snowflake" class="w-4 h-4 text-sky-400"></i> Skiing & Paragliding</span>
+                            <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-saffronOrange-500"></i> 112km from Jammu</span>
+                            <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="home" class="w-4 h-4 text-green-400"></i> 40+ Certified Stays</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Right Pane: Selection & Exploration Grid -->
+                <div class="lg:col-span-4 flex flex-col justify-between space-y-4 reveal reveal-right">
+                    
+                    <!-- Selection Card 1: Patnitop -->
+                    <div id="tourism-card-patnitop" onclick="setTourismScene('patnitop')" class="p-5 rounded-2xl cursor-pointer transition-all duration-300 border border-saffronOrange-500 bg-gradient-to-tr from-saffronOrange-500/10 to-transparent shadow-lg flex items-center justify-between group">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-saffronOrange-500/20 flex items-center justify-center">
+                                <i data-lucide="snowflake" class="w-6 h-6 text-saffronOrange-500"></i>
+                            </div>
+                            <div class="text-left">
+                                <h4 class="font-outfit text-sm font-bold text-white">Patnitop Meadows</h4>
+                                <p class="text-xs text-slate-300 mt-1">Scenic snow trails & stays</p>
+                            </div>
+                        </div>
+                        <i id="tourism-chevron-patnitop" data-lucide="chevron-right" class="w-5 h-5 text-saffronOrange-500 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+
+                    <!-- Selection Card 2: Sanasar Meadows -->
+                    <div id="tourism-card-sanasar" onclick="setTourismScene('sanasar')" class="p-5 rounded-2xl cursor-pointer transition-all duration-300 border border-white/5 hover:border-white/20 bg-white/5 hover:bg-white/10 flex items-center justify-between group">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-kashmirGreen-500/20 flex items-center justify-center">
+                                <i data-lucide="compass" class="w-6 h-6 text-kashmirGreen-200"></i>
+                            </div>
+                            <div class="text-left">
+                                <h4 class="font-outfit text-sm font-bold text-white">Sanasar Meadows</h4>
+                                <p class="text-xs text-slate-400 mt-1">Lush green meadows & paragliding</p>
+                            </div>
+                        </div>
+                        <i id="tourism-chevron-sanasar" data-lucide="chevron-right" class="w-5 h-5 text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                    </div>
+
+                    <!-- Selection Card 3: Karol Market & local Cafes -->
+                    <div id="tourism-card-karol" onclick="setTourismScene('karol')" class="p-5 rounded-2xl cursor-pointer transition-all duration-300 border border-white/5 hover:border-white/20 bg-white/5 hover:bg-white/10 flex items-center justify-between group">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-mountainBlue-500/20 flex items-center justify-center">
+                                <i data-lucide="coffee" class="w-6 h-6 text-mountainBlue-200"></i>
+                            </div>
+                            <div class="text-left">
+                                <h4 class="font-outfit text-sm font-bold text-white">Karol Market & Cafes</h4>
+                                <p class="text-xs text-slate-400 mt-1">Authentic J&K culinary stops</p>
+                            </div>
+                        </div>
+                        <i id="tourism-chevron-karol" data-lucide="chevron-right" class="w-5 h-5 text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                    </div>
+
+                    <!-- Fast Booking CTA in Right Pane -->
+                    <div class="bg-gradient-to-r from-mountainBlue-700/40 to-kashmirGreen-700/40 border border-white/10 rounded-2xl p-5 text-center mt-auto flex flex-col space-y-4">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Quick Travel Plan</h4>
+                        <p class="text-[11px] text-slate-300">Connect with local travel coordinators directly in the RambanKart App.</p>
+                        <a href="#app" class="py-2.5 rounded-xl bg-saffronOrange-500 hover:bg-saffronOrange-600 font-bold text-xs text-white uppercase tracking-wider transition-all duration-300">Book Ride & Guide</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 7. BUSINESS OWNER CTA -->
+    <section id="partner" class="py-20 relative z-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="relative rounded-[40px] overflow-hidden bg-gradient-to-r from-kashmirGreen-900 to-mountainBlue-950 border border-white/10 p-8 sm:p-12 lg:p-16 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-12">
+                <!-- Inner grid/radial aura -->
+                <div class="absolute inset-0 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none"></div>
+                <div class="absolute top-0 right-0 w-80 h-80 rounded-full bg-saffronOrange-500/10 blur-[100px] pointer-events-none"></div>
+
+                <!-- CTA Left: Headline & Benefits -->
+                <div class="flex-1 space-y-6 text-center lg:text-left z-10">
+                    <div class="inline-flex items-center space-x-2 bg-saffronOrange-500/20 border border-saffronOrange-500/30 px-3.5 py-1.5 rounded-full">
+                        <i data-lucide="handshake" class="w-4 h-4 text-saffronOrange-500"></i>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-saffronOrange-500">Zero Commission Partner Program</span>
+                    </div>
+                    <h2 class="font-outfit text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+                        Take Your Business Online
+                    </h2>
+                    <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto lg:mx-0">
+                        Join Ramban's largest digital network. Boost sales, accept orders directly via custom WhatsApp links, and grow your consumer footprint tenfold.
+                    </p>
+
+                    <!-- Core merchant perks list -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 text-left max-w-xl mx-auto lg:mx-0">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-saffronOrange-500 shrink-0"></i>
+                            <span class="text-xs font-semibold text-slate-200">100% Free Onboarding</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-saffronOrange-500 shrink-0"></i>
+                            <span class="text-xs font-semibold text-slate-200">Direct WhatsApp Orders</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-saffronOrange-500 shrink-0"></i>
+                            <span class="text-xs font-semibold text-slate-200">Real-time Order Dashboard</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-saffronOrange-500 shrink-0"></i>
+                            <span class="text-xs font-semibold text-slate-200">Dedicated Local Support</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Right: Modern Glassmorphic Onboarding Card -->
+                <div class="w-full max-w-[400px] glassmorphism rounded-3xl p-6 border border-white/10 shadow-2xl z-10 reveal reveal-right">
+                    <h3 class="font-outfit text-lg font-bold text-white text-center">Onboard in 60 Seconds</h3>
+                    <p class="text-[11px] text-slate-300 text-center mt-1">Get your digital merchant storefront instantly</p>
+                    
+                    <!-- Small interactive demo form -->
+                    <form class="space-y-4 mt-6" id="merchant-onboard-form" onsubmit="handleMerchantWaitlist(event)">
+                        <div>
+                            <label class="text-[9px] uppercase tracking-wider font-bold text-slate-400 block mb-1">Business Name</label>
+                            <input type="text" id="merchant-name" required placeholder="e.g. Chenab Valley Sweets & Bakery" class="w-full px-4 py-3 rounded-xl bg-slateDark-950/70 border border-white/10 text-white placeholder-slate-500 text-xs focus:border-saffronOrange-500 focus:outline-none transition-colors">
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase tracking-wider font-bold text-slate-400 block mb-1">Business Category</label>
+                            <select id="merchant-category" class="w-full px-4 py-3 rounded-xl bg-slateDark-950/70 border border-white/10 text-slate-300 text-xs focus:border-saffronOrange-500 focus:outline-none transition-colors">
+                                <option>Restaurant / Food Stall</option>
+                                <option>Grocery / Kiryana Store</option>
+                                <option>Hotel / Guesthouse Stay</option>
+                                <option>Local Cab Operator</option>
+                                <option>Home Services Contractor</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[9px] uppercase tracking-wider font-bold text-slate-400 block mb-1">WhatsApp Mobile Number</label>
+                            <input type="tel" id="merchant-phone" required placeholder="e.g. +91 99060 12345" class="w-full px-4 py-3 rounded-xl bg-slateDark-950/70 border border-white/10 text-white placeholder-slate-500 text-xs focus:border-saffronOrange-500 focus:outline-none transition-colors">
+                        </div>
+                        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-saffronOrange-500 to-saffronOrange-600 text-white font-bold text-xs uppercase tracking-wider shadow-glow-orange hover:shadow-saffronOrange-500/40 hover:scale-102 transition-transform duration-300">
+                            Register Store
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 8. APP PREVIEW SHOWCASE -->
+    <section id="app" class="py-20 relative z-20 bg-slateDark-950/60 border-t border-white/5 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <!-- App Preview Left: Elegant Copy & Download Store Links -->
+                <div class="lg:col-span-6 flex flex-col space-y-8 text-center lg:text-left reveal">
+                    
+                    <div class="space-y-4">
+                        <div class="inline-flex items-center space-x-2 bg-mountainBlue-500/10 border border-mountainBlue-500/20 px-3.5 py-1.5 rounded-full">
+                            <i data-lucide="smartphone" class="w-4 h-4 text-mountainBlue-200"></i>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-mountainBlue-200">Hyperlocal Super-App</span>
+                        </div>
+                        <h2 class="font-outfit text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+                            Download the <br>
+                            RambanKart Super-App
+                        </h2>
+                        <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto lg:mx-0">
+                            Access everything Ramban has to offer in a lightweight, high-performance mobile application optimized for peak performance even under 3G networks.
+                        </p>
+                    </div>
+
+                    <!-- Custom animated app features -->
+                    <div class="space-y-4 max-w-md mx-auto lg:mx-0">
+                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5 text-left">
+                            <div class="w-8 h-8 rounded-lg bg-kashmirGreen-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="battery-charging" class="w-4.5 h-4.5 text-kashmirGreen-200"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-slate-200">Ultra lightweight (< 12MB install footprint)</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5 text-left">
+                            <div class="w-8 h-8 rounded-lg bg-saffronOrange-500/20 flex items-center justify-center shrink-0">
+                                <i data-lucide="wifi-off" class="w-4.5 h-4.5 text-saffronOrange-500"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-slate-200">Offline caching & basic SMS/WhatsApp ordering fallback</span>
+                        </div>
+                    </div>
+
+                    <!-- App store download badges -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <!-- Play store badge -->
+                        <a href="#" class="w-52 h-16 bg-slateDark-900 border border-white/10 rounded-2xl flex items-center px-4 hover:border-saffronOrange-500 transition-colors shadow-premium group">
+                            <i data-lucide="play" class="w-7 h-7 text-saffronOrange-500 mr-3"></i>
+                            <div class="flex flex-col text-left">
+                                <span class="text-[9px] uppercase tracking-wider text-slate-400">Get it on</span>
+                                <span class="text-sm font-bold text-white group-hover:text-saffronOrange-500 transition-colors">Google Play</span>
+                            </div>
+                        </a>
+                        <!-- App store badge -->
+                        <a href="#" class="w-52 h-16 bg-slateDark-900 border border-white/10 rounded-2xl flex items-center px-4 hover:border-saffronOrange-500 transition-colors shadow-premium group">
+                            <i data-lucide="apple" class="w-7 h-7 text-white mr-3"></i>
+                            <div class="flex flex-col text-left">
+                                <span class="text-[9px] uppercase tracking-wider text-slate-400">Download on the</span>
+                                <span class="text-sm font-bold text-white group-hover:text-saffronOrange-500 transition-colors">App Store</span>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- App Preview Right: CSS Immersive Mobile Screen (tabs interactive mockup) -->
+                <div class="lg:col-span-6 relative w-full flex items-center justify-center reveal reveal-right">
+                    
+                    <div class="absolute w-80 h-80 rounded-full bg-mountainBlue-500/10 blur-[100px]"></div>
+
+                    <!-- Custom High Fidelity Mobile Frame mockup -->
+                    <div class="relative w-full max-w-[340px] aspect-[9/19] bg-slateDark-950 rounded-[48px] p-3 shadow-2xl border-4 border-slate-800/80 overflow-hidden flex flex-col justify-between">
+                        
+                        <!-- Top Notch -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-2xl z-30 flex items-center justify-center">
+                            <div class="w-2.5 h-2.5 rounded-full bg-slate-900 mr-2"></div>
+                            <div class="w-12 h-1 bg-slate-950 rounded-full"></div>
+                        </div>
+
+                        <!-- Mock Mobile App UI Screen -->
+                        <div class="relative flex-1 bg-slateDark-950 rounded-[38px] p-4 flex flex-col justify-between z-10 overflow-hidden pt-8">
+                            
+                            <!-- Search Bar Mockup -->
+                            <div class="flex items-center justify-between pb-3 border-b border-white/5 mb-3">
+                                <div class="flex items-center space-x-1.5">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-saffronOrange-500"></i>
+                                    <span class="text-[9px] font-bold text-white">Karol Market, Ramban</span>
+                                </div>
+                                <i data-lucide="user" class="w-3.5 h-3.5 text-slate-400"></i>
+                            </div>
+
+                            <!-- Screen dynamic visual state: Tab Controller -->
+                            <div class="flex items-center justify-between bg-white/5 p-1 rounded-xl border border-white/5 mb-4 text-[9px] font-bold uppercase tracking-wider text-slate-300">
+                                <button onclick="setAppMockTab('food')" id="mock-tab-food" class="flex-1 py-1.5 rounded-lg text-center text-white bg-saffronOrange-500">Food</button>
+                                <button onclick="setAppMockTab('cab')" id="mock-tab-cab" class="flex-1 py-1.5 rounded-lg text-center">Cabs</button>
+                                <button onclick="setAppMockTab('stay')" id="mock-tab-stay" class="flex-1 py-1.5 rounded-lg text-center">Stays</button>
+                            </div>
+
+                            <!-- Screen Dynamic content area -->
+                            <div id="mock-screen-content" class="flex-1 flex flex-col space-y-3 overflow-y-auto pr-1">
+                                
+                                <!-- Content item 1 -->
+                                <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                            <i data-lucide="pizza" class="w-5 h-5 text-red-400"></i>
+                                        </div>
+                                        <div class="text-left">
+                                            <span class="text-[9px] font-bold text-slate-400 uppercase">Chenab Hotel & Cafe</span>
+                                            <span class="text-xs font-semibold text-white block mt-0.5">Butter Chicken Combo</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-saffronOrange-500">₹240</span>
+                                </div>
+
+                                <!-- Content item 2 -->
+                                <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                            <i data-lucide="utensils" class="w-5 h-5 text-red-400"></i>
+                                        </div>
+                                        <div class="text-left">
+                                            <span class="text-[9px] font-bold text-slate-400 uppercase">Ramban Fast Food Hub</span>
+                                            <span class="text-xs font-semibold text-white block mt-0.5">Spicy Veg Momos</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-saffronOrange-500">₹120</span>
+                                </div>
+
+                                <!-- Content item 3 -->
+                                <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                            <i data-lucide="cup-soda" class="w-5 h-5 text-red-400"></i>
+                                        </div>
+                                        <div class="text-left">
+                                            <span class="text-[9px] font-bold text-slate-400 uppercase">Local Saffron Chai Stop</span>
+                                            <span class="text-xs font-semibold text-white block mt-0.5">Kashmiri Kahwa (Hot)</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-saffronOrange-500">₹80</span>
+                                </div>
+
+                            </div>
+
+                            <!-- Bottom Navigation Mockup -->
+                            <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-around text-slate-400 text-[8px] font-medium">
+                                <div class="flex flex-col items-center text-saffronOrange-500"><i data-lucide="home" class="w-4 h-4 mb-0.5"></i>Home</div>
+                                <div class="flex flex-col items-center"><i data-lucide="heart" class="w-4 h-4 mb-0.5"></i>Favorites</div>
+                                <div class="flex flex-col items-center"><i data-lucide="truck" class="w-4 h-4 mb-0.5"></i>Orders</div>
+                                <div class="flex flex-col items-center"><i data-lucide="user" class="w-4 h-4 mb-0.5"></i>Profile</div>
+                            </div>
+
+                            <!-- Bottom bar indicator inside phone -->
+                            <div class="w-24 h-1 bg-slate-700 rounded-full mx-auto mt-2"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 9. TESTIMONIALS -->
+    <section class="py-20 relative z-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <div class="inline-flex items-center space-x-2 bg-saffronOrange-500/10 border border-saffronOrange-500/20 px-3.5 py-1.5 rounded-full">
+                    <i data-lucide="message-square" class="w-4 h-4 text-saffronOrange-500"></i>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-saffronOrange-500">Local Voices</span>
+                </div>
+                <h2 class="font-outfit text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+                    Trusted by Ramban's Residents & Business Owners
+                </h2>
+                <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto">
+                    Hear authentic stories from local merchants, tourists, and delivery partners who rely on RambanKart daily.
+                </p>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Testimonial 1 -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden reveal">
+                    <div class="absolute -top-3 -right-3 w-16 h-16 rounded-full bg-saffronOrange-500/5 blur-xl"></div>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed italic">
+                            "Pre-registering my Kiryana store for the RambanKart launch was simple! A commission-free local marketplace that connects directly to WhatsApp is exactly what we need to grow our sales in Karol and Maitra."
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center gap-3 border-t border-white/5 pt-4">
+                        <div class="w-10 h-10 rounded-full bg-kashmirGreen-500/30 flex items-center justify-center text-kashmirGreen-200 font-extrabold font-outfit text-sm">MS</div>
+                        <div class="text-left">
+                            <h4 class="text-xs font-bold text-white">Mohammad Shafi</h4>
+                            <p class="text-[10px] text-slate-400">Owner, Shafi Kiryana Store (Karol)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden reveal delay-100">
+                    <div class="absolute -top-3 -right-3 w-16 h-16 rounded-full bg-mountainBlue-500/5 blur-xl"></div>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed italic">
+                            "Visiting Patnitop and Sanasar next season will be so much easier. Being able to find a verified local cab driver and trekking guide all inside one premium super-app is a game-changer for tourists!"
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center gap-3 border-t border-white/5 pt-4">
+                        <div class="w-10 h-10 rounded-full bg-mountainBlue-500/30 flex items-center justify-center text-mountainBlue-200 font-extrabold font-outfit text-sm">AN</div>
+                        <div class="text-left">
+                            <h4 class="text-xs font-bold text-white">Aditi Nair</h4>
+                            <p class="text-[10px] text-slate-400">Tourist, Travel Blogger (New Delhi)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="glassmorphism-card rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden reveal delay-200">
+                    <div class="absolute -top-3 -right-3 w-16 h-16 rounded-full bg-saffronOrange-500/5 blur-xl"></div>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                            <i data-lucide="star" class="w-4 h-4 text-saffronOrange-500 fill-saffronOrange-500"></i>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-200 leading-relaxed italic">
+                            "Having verified local contractors available on-demand inside RambanKart is going to save us so much time. In a hilly district like ours, discovering reliable service partners in an app is exactly what we need."
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center gap-3 border-t border-white/5 pt-4">
+                        <div class="w-10 h-10 rounded-full bg-kashmirGreen-500/30 flex items-center justify-center text-kashmirGreen-200 font-extrabold font-outfit text-sm">KS</div>
+                        <div class="text-left">
+                            <h4 class="text-xs font-bold text-white">Karan Singh</h4>
+                            <p class="text-[10px] text-slate-400">Resident, Maitra (Ramban)</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 10. FOOTER -->
+    <footer class="bg-slateDark-950 border-t border-white/10 pt-16 pb-8 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12 border-b border-white/5">
+                
+                <!-- Col 1: Brand Info -->
+                <div class="space-y-6">
+                    <a href="#" class="flex items-center space-x-3 group">
+                        <div class="relative w-10 h-10 flex items-center justify-center bg-gradient-to-tr from-kashmirGreen-600 via-mountainBlue-500 to-saffronOrange-500 rounded-full transition-transform duration-500 group-hover:scale-105 overflow-hidden p-0.5">
+                            <img src="logo.png" class="w-full h-full object-cover rounded-full bg-white" alt="RambanKart Logo">
+                        </div>
+                        <span class="font-outfit text-lg font-bold text-white">Ramban<span class="text-saffronOrange-500">Kart</span></span>
+                    </a>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Ramban District's exclusive digital marketplace super-app. Empowering shopkeepers, drivers, and service partners across the Chenab Valley.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <a href="#" class="w-8 h-8 rounded-lg bg-white/5 border border-white/5 hover:border-saffronOrange-500 flex items-center justify-center hover:bg-saffronOrange-500/10 transition-all"><i data-lucide="twitter" class="w-4 h-4 text-slate-400 hover:text-white"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-white/5 border border-white/5 hover:border-saffronOrange-500 flex items-center justify-center hover:bg-saffronOrange-500/10 transition-all"><i data-lucide="instagram" class="w-4 h-4 text-slate-400 hover:text-white"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-white/5 border border-white/5 hover:border-saffronOrange-500 flex items-center justify-center hover:bg-saffronOrange-500/10 transition-all"><i data-lucide="facebook" class="w-4 h-4 text-slate-400 hover:text-white"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div class="space-y-4">
+                    <h4 class="font-outfit text-xs font-extrabold uppercase tracking-wider text-white">Platform Links</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><a href="#hero" class="hover:text-saffronOrange-500 transition-colors">Home Portal</a></li>
+                        <li><a href="#services" class="hover:text-saffronOrange-500 transition-colors">All Services</a></li>
+                        <li><a href="#why" class="hover:text-saffronOrange-500 transition-colors">Why RambanKart</a></li>
+                        <li><a href="#tourism" class="hover:text-saffronOrange-500 transition-colors">Tourism Spotlight</a></li>
+                        <li><a href="#partner" class="hover:text-saffronOrange-500 transition-colors">Become a Partner</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Legal & Support -->
+                <div class="space-y-4">
+                    <h4 class="font-outfit text-xs font-extrabold uppercase tracking-wider text-white">Support & Legal</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><a href="#" class="hover:text-saffronOrange-500 transition-colors">Merchant Guidelines</a></li>
+                        <li><a href="#" class="hover:text-saffronOrange-500 transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-saffronOrange-500 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-saffronOrange-500 transition-colors">Partner Code of Conduct</a></li>
+                        <li><a href="#" class="hover:text-saffronOrange-500 transition-colors">24/7 Helpline Support</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Regional Hub Details -->
+                <div class="space-y-4">
+                    <h4 class="font-outfit text-xs font-extrabold uppercase tracking-wider text-white">Regional Hub</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed flex items-start gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-saffronOrange-500 shrink-0 mt-0.5"></i>
+                        <span>Second Floor, Inside Tax Point,<br>Opposite of PNB Bank,<br>Near by Bus Stand,<br>Ramban, Jammu & Kashmir - 182144</span>
+                    </p>
+                    <p class="text-xs text-slate-400 leading-relaxed flex items-center gap-2">
+                        <i data-lucide="mail" class="w-4 h-4 text-saffronOrange-500 shrink-0"></i>
+                        <a href="mailto:amarkrishna075@gmail.com" class="hover:text-saffronOrange-500 transition-colors">amarkrishna075@gmail.com</a>
+                    </p>
+                    <p class="text-xs text-slate-400 leading-relaxed flex items-center gap-2">
+                        <i data-lucide="phone" class="w-4 h-4 text-saffronOrange-500 shrink-0"></i>
+                        <a href="tel:+919149858527" class="hover:text-saffronOrange-500 transition-colors">+91 91498 58527</a>
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright bar -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500">
+                <p>© 2026 RambanKart Technologies Private Limited. All rights reserved.</p>
+                <p class="mt-2 sm:mt-0">Designed in Jammu & Kashmir for the Chenab Valley. 🏔️</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- PRE-LAUNCH "UNDER PLANNING" INTERACTIVE TOAST POPUP -->
+    <div id="prelaunch-toast" class="fixed bottom-6 right-6 z-[100] max-w-sm w-full glassmorphism border border-white/10 rounded-2xl shadow-2xl p-5 flex flex-col gap-4 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-500 ease-out">
+        <div class="flex items-start justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-saffronOrange-500/20 flex items-center justify-center text-saffronOrange-500">
+                    <i data-lucide="info" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-outfit text-sm font-bold text-white uppercase tracking-wider" id="toast-title">Upcoming Feature</h4>
+                    <p class="text-[10px] text-slate-400">Ramban District Pre-Launch Phase</p>
+                </div>
+            </div>
+            <button onclick="closePrelaunchToast()" class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+        <p class="text-xs text-slate-200 leading-relaxed" id="toast-desc">
+            This service is currently under active planning and registration in Karol, Maitra, and Ramban. Join the waitlist to receive instant updates!
+        </p>
+        <button onclick="scrollToWaitlist()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-saffronOrange-600 to-saffronOrange-500 text-white font-bold text-xs uppercase tracking-wider text-center shadow-glow-orange hover:shadow-saffronOrange-500/40 transition-all">
+            Join Launch Waitlist
+        </button>
+    </div>
+
+    <!-- PRE-LAUNCH WAITLIST CELEBRATION MODAL -->
+    <div id="waitlist-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slateDark-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="max-w-md w-full glassmorphism border border-white/15 rounded-3xl p-8 text-center space-y-6 transform scale-95 transition-transform duration-300" id="waitlist-modal-card">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-kashmirGreen-600 via-kashmirGreen-500 to-saffronOrange-500 flex items-center justify-center mx-auto shadow-glow-green animate-bounce">
+                <i data-lucide="party-popper" class="w-10 h-10 text-white"></i>
+            </div>
+            <div class="space-y-2">
+                <h3 class="font-outfit text-2xl font-extrabold text-white">You're on the Waitlist! 🚀</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Thank you for pre-registering. We have registered your details for Ramban district's digital launch. You will receive priority updates at your email address!
+                </p>
+            </div>
+            <div class="bg-white/5 border border-white/5 p-4 rounded-2xl text-left flex items-start gap-3">
+                <i data-lucide="map-pin" class="w-5 h-5 text-saffronOrange-500 shrink-0 mt-0.5"></i>
+                <div>
+                    <h4 class="text-xs font-bold text-white">Office Location (Under Planning)</h4>
+                    <p class="text-[10px] text-slate-400 mt-1">Second Floor, Inside Tax Point, Opposite of PNB Bank, Near by Bus Stand, Ramban, J&K - 182144</p>
+                </div>
+            </div>
+            <button onclick="closeWaitlistModal()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-kashmirGreen-600 to-kashmirGreen-500 hover:from-saffronOrange-600 hover:to-saffronOrange-500 text-white font-bold text-sm uppercase tracking-wider text-center shadow-lg transition-all duration-300">
+                Awesome, Thank You!
+            </button>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE APP PREVIEW AND MAIN WEBPAGE LOGIC (Vanilla JS) -->
+    <script type="text/javascript">
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // 1. Mobile Drawer Navigation toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => {
+                    mobileMenu.classList.remove('-translate-y-5', 'opacity-0');
+                }, 50);
+                menuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                mobileMenu.classList.add('-translate-y-5', 'opacity-0');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+                menuIcon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        });
+
+        // Close mobile nav drawer when links are clicked
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('-translate-y-5', 'opacity-0');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+
+        // 2. Interactive Mobile App Mockup State Changer
+        function setAppMockTab(tab) {
+            const tabs = ['food', 'cab', 'stay'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`mock-tab-${t}`);
+                btn.className = 'flex-1 py-1.5 rounded-lg text-center';
+            });
+            const activeBtn = document.getElementById(`mock-tab-${tab}`);
+            activeBtn.className = 'flex-1 py-1.5 rounded-lg text-center text-white bg-saffronOrange-500';
+
+            const container = document.getElementById('mock-screen-content');
+            
+            // Generate mock layouts based on selected tab
+            if (tab === 'food') {
+                container.innerHTML = `
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                <i data-lucide="pizza" class="w-5 h-5 text-red-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase">Chenab Hotel & Cafe</span>
+                                <span class="text-xs font-semibold text-white block mt-0.5">Butter Chicken Combo</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹240</span>
+                    </div>
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                <i data-lucide="utensils" class="w-5 h-5 text-red-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase">Ramban Fast Food Hub</span>
+                                <span class="text-xs font-semibold text-white block mt-0.5">Spicy Veg Momos</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹120</span>
+                    </div>
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                <i data-lucide="cup-soda" class="w-5 h-5 text-red-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase">Local Saffron Chai Stop</span>
+                                <span class="text-xs font-semibold text-white block mt-0.5">Kashmiri Kahwa (Hot)</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹80</span>
+                    </div>
+                `;
+            } else if (tab === 'cab') {
+                container.innerHTML = `
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                                <i data-lucide="car" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase">Economy Sedan</span>
+                                <span class="text-xs font-semibold text-white block mt-0.5">Karol to Patnitop Hills</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹850</span>
+                    </div>
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                                <i data-lucide="navigation" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase">Shared Transit Cruiser</span>
+                                <span class="text-xs font-semibold text-white block mt-0.5">Ramban to Banihal</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹150</span>
+                    </div>
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                                <i data-lucide="shield" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase">SUV / Outstation Luxury</span>
+                                <span class="text-xs font-semibold text-white block mt-0.5">Ramban to Jammu Airport</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹3,200</span>
+                    </div>
+                `;
+            } else if (tab === 'stay') {
+                container.innerHTML = `
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                                <i data-lucide="hotel" class="w-5 h-5 text-indigo-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase">Patnitop Forest Heights</span>
+                                <span class="text-xs font-semibold text-white block mt-0.5">Deluxe Pine Cottage</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹3,400/n</span>
+                    </div>
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                                <i data-lucide="home" class="w-5 h-5 text-indigo-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase">Sanasar Meadows Valley Cottage</span>
+                                <span class="text-xs font-semibold text-white block mt-0.5">Glamping Luxury Dome</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹4,800/n</span>
+                    </div>
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                                <i data-lucide="building" class="w-5 h-5 text-indigo-400"></i>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[9px] font-bold text-slate-400 uppercase">Kailash View Residency</span>
+                                <span class="text-xs font-semibold text-white block mt-0.5">Standard Executive Room</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-saffronOrange-500">₹1,800/n</span>
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        // 2.5. Interactive Tourism Showcase Scenic Card Changer
+        function setTourismScene(dest) {
+            const dests = ['patnitop', 'sanasar', 'karol'];
+            
+            // Loop through each destination and reset the right sidebar selection styling
+            dests.forEach(d => {
+                const card = document.getElementById(`tourism-card-${d}`);
+                const chevron = document.getElementById(`tourism-chevron-${d}`);
+                
+                if (d === dest) {
+                    // Active style
+                    card.className = 'p-5 rounded-2xl cursor-pointer transition-all duration-300 border border-saffronOrange-500 bg-gradient-to-tr from-saffronOrange-500/10 to-transparent shadow-lg flex items-center justify-between group';
+                    if (chevron) {
+                        chevron.className = 'w-5 h-5 text-saffronOrange-500 group-hover:translate-x-1 transition-transform';
+                    }
+                } else {
+                    // Inactive style
+                    card.className = 'p-5 rounded-2xl cursor-pointer transition-all duration-300 border border-white/5 hover:border-white/20 bg-white/5 hover:bg-white/10 flex items-center justify-between group';
+                    if (chevron) {
+                        chevron.className = 'w-5 h-5 text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-all';
+                    }
+                }
+            });
+
+            // Update Left Main Immersive Visual Content based on active state
+            const bgImg = document.getElementById('tourism-bg');
+            const badge = document.getElementById('tourism-badge');
+            const rating = document.getElementById('tourism-rating');
+            const title = document.getElementById('tourism-title');
+            const desc = document.getElementById('tourism-desc');
+            const tags = document.getElementById('tourism-tags');
+
+            if (dest === 'patnitop') {
+                bgImg.src = 'patnitop.png';
+                badge.innerText = 'Patnitop Hills';
+                rating.innerText = '4.9 (120+ Saves)';
+                title.innerText = 'Explore Snow Slopes & Velvet Pine Valleys';
+                desc.innerText = 'Plan your weekend escape to Patnitop. Connect with verified RambanKart tourism guides, book local cottages directly, and reserve premium taxi commutes instantly.';
+                tags.innerHTML = `
+                    <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="snowflake" class="w-4 h-4 text-sky-400"></i> Skiing & Paragliding</span>
+                    <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-saffronOrange-500"></i> 112km from Jammu</span>
+                    <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="home" class="w-4 h-4 text-green-400"></i> 40+ Certified Stays</span>
+                `;
+            } else if (dest === 'sanasar') {
+                bgImg.src = 'sanasar.png';
+                badge.innerText = 'Sanasar Meadows';
+                rating.innerText = '4.8 (85+ Saves)';
+                title.innerText = 'Velvet Green Valleys & Aero Adventures';
+                desc.innerText = 'Experience the mini-Gulmarg of Ramban district. Sanasar offers incredible paragliding, high-altitude golf courses, remote luxury glamping domes, and pristine lakes.';
+                tags.innerHTML = `
+                    <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="compass" class="w-4 h-4 text-green-400"></i> Paragliding & Trekking</span>
+                    <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-saffronOrange-500"></i> 20km from Patnitop</span>
+                    <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="tent" class="w-4 h-4 text-orange-400"></i> Eco-Campgrounds</span>
+                `;
+            } else if (dest === 'karol') {
+                bgImg.src = 'ramban.png';
+                badge.innerText = 'Karol Market & Cafes';
+                rating.innerText = '4.7 (95+ Saves)';
+                title.innerText = 'Authentic Chenab Cuisine & Vibrant Cafes';
+                desc.innerText = 'Indulge in authentic Kashmiri food, Saffron tea (Kahwa), and Chenab Valley sweets. Discover traditional handcrafts, local shopping, and cozy meeting spots in Ramban town.';
+                tags.innerHTML = `
+                    <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="coffee" class="w-4 h-4 text-amber-400"></i> Local Kahwa & Bakery</span>
+                    <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="shopping-bag" class="w-4 h-4 text-saffronOrange-500"></i> Shopping Hub</span>
+                    <span class="px-3 py-1 rounded-lg text-xs bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2"><i data-lucide="utensils" class="w-4 h-4 text-red-400"></i> 25+ Restaurants</span>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        // 3. Scroll Reveal Observer
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        document.querySelectorAll('.reveal, .reveal-scale, .reveal-left, .reveal-right').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // 4. Parallax scroll effect for floating background blobs (smooth desktop effect)
+        window.addEventListener('scroll', () => {
+            const scroll = window.pageYOffset;
+            const blobs = document.querySelectorAll('.animate-drift-slow-1, .animate-drift-slow-2');
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 0.15;
+                blob.style.transform = `translateY(${scroll * speed}px)`;
+            });
+        });
+
+        // 5. Pre-Launch "Under Planning" Waitlist and Toast Logic
+        function showUnderPlanningToast(serviceName, descOverride = null) {
+            const toast = document.getElementById('prelaunch-toast');
+            const title = document.getElementById('toast-title');
+            const desc = document.getElementById('toast-desc');
+
+            title.innerText = `${serviceName} - Under Planning`;
+            desc.innerText = descOverride || `Our premium ${serviceName.toLowerCase()} network is currently in the active planning phase. Pre-register for early beta access!`;
+            
+            toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+            
+            // Auto close after 8 seconds
+            if (window.toastTimeout) clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => {
+                closePrelaunchToast();
+            }, 8000);
+        }
+
+        function closePrelaunchToast() {
+            const toast = document.getElementById('prelaunch-toast');
+            toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+        }
+
+        function scrollToWaitlist() {
+            closePrelaunchToast();
+            const form = document.getElementById('hero-waitlist-form');
+            if (form) {
+                form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Briefly flash a border glow to draw attention
+                form.classList.add('border-saffronOrange-500', 'shadow-glow-orange');
+                setTimeout(() => {
+                    form.classList.remove('shadow-glow-orange');
+                }, 1500);
+            }
+        }
+
+        function handleHeroWaitlist(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('waitlist-email');
+            const modal = document.getElementById('waitlist-modal');
+            const modalCard = document.getElementById('waitlist-modal-card');
+            
+            if (emailInput && emailInput.value) {
+                // Simulate waitlist subscription
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    modalCard.classList.remove('scale-95');
+                }, 50);
+
+                // Increment waitlist counter locally for fun!
+                const counter = document.getElementById('waitlist-counter');
+                if (counter) {
+                    let val = parseInt(counter.innerText.replace(/,/g, ''));
+                    counter.innerText = (val + 1).toLocaleString();
+                }
+                emailInput.value = '';
+            }
+        }
+
+        function closeWaitlistModal() {
+            const modal = document.getElementById('waitlist-modal');
+            const modalCard = document.getElementById('waitlist-modal-card');
+            modalCard.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                
+                // Reset modal back to standard user waitlist copy
+                const modalTitle = modal.querySelector('h3');
+                const modalDesc = modal.querySelector('p');
+                modalTitle.innerHTML = "You're on the Waitlist! 🚀";
+                modalDesc.innerHTML = "Thank you for pre-registering. We have registered your details for Ramban district's digital launch. You will receive priority updates at your email address!";
+            }, 150);
+        }
+
+        function handleMerchantWaitlist(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('merchant-name');
+            const phoneInput = document.getElementById('merchant-phone');
+            const categorySelect = document.getElementById('merchant-category');
+            const modal = document.getElementById('waitlist-modal');
+            const modalCard = document.getElementById('waitlist-modal-card');
+            
+            if (nameInput && nameInput.value) {
+                const businessName = nameInput.value;
+                const businessCategory = categorySelect ? categorySelect.value : 'Partner';
+                const businessPhone = phoneInput.value;
+
+                // Modify modal copy to thank the merchant specifically
+                const modalTitle = modal.querySelector('h3');
+                const modalDesc = modal.querySelector('p');
+                
+                modalTitle.innerHTML = "Store Registered! 🏪";
+                modalDesc.innerHTML = `Thank you for onboarding <strong>${businessName}</strong> as a <strong>${businessCategory}</strong>! We have registered your business for the Ramban district closed-beta phase. Our local team will contact you at <strong>${businessPhone}</strong> shortly.`;
+                
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    modalCard.classList.remove('scale-95');
+                }, 50);
+
+                // Construct WhatsApp message URL and redirect/open in new tab
+                const whatsappNumber = "919149858527";
+                const message = `Hello RambanKart Team,\n\nI want to register my store on RambanKart:\n🏪 *Store Name:* ${businessName}\n📂 *Category:* ${businessCategory}\n💬 *My WhatsApp:* ${businessPhone}\n\nPlease onboard my digital merchant storefront!`;
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                
+                // Open in new tab after a brief delay so they see the modal first
+                setTimeout(() => {
+                    window.open(whatsappUrl, '_blank');
+                }, 1000);
+                
+                nameInput.value = '';
+                phoneInput.value = '';
+            }
+        }
+
+        // Intercept click on all upcoming services/links and show the pre-launch toast
+        document.addEventListener('DOMContentLoaded', () => {
+            // Bind to all service cards with href="#app" in their arrow link
+            document.querySelectorAll('.glassmorphism-card').forEach(card => {
+                const appLink = card.querySelector('a[href="#app"]');
+                if (appLink) {
+                    const serviceTitle = card.querySelector('h3').innerText;
+                    card.classList.add('cursor-pointer');
+                    card.addEventListener('click', (e) => {
+                        // Check if they clicked an actual input or waitlist form
+                        if (e.target.closest('form') || e.target.closest('input') || e.target.closest('button') || e.target.closest('a')) return;
+                        
+                        e.preventDefault();
+                        showUnderPlanningToast(serviceTitle);
+                    });
+                }
+            });
+
+            // Make mobile drawer and CTA buttons trigger the app under planning toast
+            document.querySelectorAll('a[href="#app"]').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showUnderPlanningToast('RambanKart Super-App', 'The Android and iOS super-apps are currently under active planning and design. Join the waitlist for exclusive closed-beta testing!');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
