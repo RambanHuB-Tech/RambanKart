@@ -1296,7 +1296,7 @@
                         </div>
 
                         <div class="space-y-3">
-                            <a href="app-release.apk" download="rambankart-release.apk" target="_blank" class="w-full py-4 rounded-2xl bg-gradient-to-r from-saffronOrange-500 to-saffronOrange-600 hover:from-saffronOrange-600 hover:to-saffronOrange-700 text-white font-bold text-sm uppercase tracking-wider shadow-glow-orange flex items-center justify-center gap-3 hover:scale-[1.02] transition-all duration-300">
+                            <a href="https://drive.google.com/file/d/1V8ZDxLYvkr3p97CzFXKrrlEt2yc6gj5b/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="w-full py-4 rounded-2xl bg-gradient-to-r from-saffronOrange-500 to-saffronOrange-600 hover:from-saffronOrange-600 hover:to-saffronOrange-700 text-white font-bold text-sm uppercase tracking-wider shadow-glow-orange flex items-center justify-center gap-3 hover:scale-[1.02] transition-all duration-300">
                                 <i data-lucide="download" class="w-5 h-5"></i> 📲 DOWNLOAD ANDROID BETA
                             </a>
                             <p class="text-[11px] text-slate-400 text-center font-medium">
@@ -1782,7 +1782,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 pt-2">
-                <a href="app-release.apk" download="rambankart-release.apk" target="_blank" class="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-saffronOrange-500 to-saffronOrange-600 hover:from-saffronOrange-600 hover:to-saffronOrange-700 text-white font-bold text-xs uppercase tracking-wider shadow-glow-orange flex items-center justify-center gap-2 transition-all">
+                <a href="https://drive.google.com/file/d/1V8ZDxLYvkr3p97CzFXKrrlEt2yc6gj5b/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-saffronOrange-500 to-saffronOrange-600 hover:from-saffronOrange-600 hover:to-saffronOrange-700 text-white font-bold text-xs uppercase tracking-wider shadow-glow-orange flex items-center justify-center gap-2 transition-all">
                     <i data-lucide="smartphone" class="w-4 h-4"></i> 📱 DOWNLOAD ANDROID BETA
                 </a>
                 <button type="button" onclick="openWhatsAppBeta()" class="px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-white/10 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors">
@@ -2073,7 +2073,7 @@
 
         // Central BETA Configuration Object
         const BETA_CONFIG = {
-            androidLink: "app-release.apk",
+            androidLink: "https://drive.google.com/file/d/1V8ZDxLYvkr3p97CzFXKrrlEt2yc6gj5b/view?usp=sharing",
             whatsappLink: "PASTE_WHATSAPP_BETA_LINK_HERE",
             maxTesters: 10,
             currentTesters: 0
@@ -2160,9 +2160,9 @@
         function downloadAndroidBeta() {
             let url = ANDROID_BETA_LINK;
             if (!url || url === "PASTE_ANDROID_BETA_LINK_HERE" || url.startsWith("YOUR_")) {
-                url = "app-release.apk";
+                url = "https://drive.google.com/file/d/1V8ZDxLYvkr3p97CzFXKrrlEt2yc6gj5b/view?usp=sharing";
             }
-            window.location.href = url;
+            window.open(url, "_blank", "noopener,noreferrer");
         }
 
         // Central WhatsApp Beta Interest DM Trigger
